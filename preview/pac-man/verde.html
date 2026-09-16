@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Commit Breaker · Pac-Man · Verde · Michel1412</title>
+  <style>
+    :root { color-scheme: dark; }
+    html, body { margin: 0; height: 100%; background: #06140c; }
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #f0fdf4;
+    }
+    .stage {
+      position: relative;
+      outline: none;
+      border-radius: 10px;
+      box-shadow: 0 0 0 1px #166534, 0 18px 60px #16653466;
+    }
+    .stage:focus { box-shadow: 0 0 0 2px #4ade80, 0 18px 60px #4ade8044; }
+    canvas { display: block; border-radius: 10px; cursor: pointer; }
+    .hint {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 6px;
+      font-size: 11px;
+      color: #86efac;
+      pointer-events: none;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage" tabindex="0" aria-label="Pac-Man no calendario de commits. Sem foco joga sozinho. Clique para jogar na hora.">
+    <canvas id="game"></canvas>
+    <div class="hint" id="hint">Clique para jogar · WASD ou setas · sem foco o automatico coleta os commits</div>
+  </div>
+  <script type="application/json" id="data">{"calendar":{"login":"Michel1412","source":"synthetic","total":1336,"weeks":[{"days":[{"date":"2025-09-14","count":0,"level":0},{"date":"2025-09-15","count":0,"level":0},{"date":"2025-09-16","count":0,"level":0},{"date":"2025-09-17","count":0,"level":0},{"date":"2025-09-18","count":1,"level":1},{"date":"2025-09-19","count":2,"level":1},{"date":"2025-09-20","count":11,"level":4}]},{"days":[{"date":"2025-09-21","count":11,"level":4},{"date":"2025-09-22","count":0,"level":0},{"date":"2025-09-23","count":3,"level":1},{"date":"2025-09-24","count":0,"level":0},{"date":"2025-09-25","count":0,"level":0},{"date":"2025-09-26","count":12,"level":4},{"date":"2025-09-27","count":11,"level":4}]},{"days":[{"date":"2025-09-28","count":6,"level":2},{"date":"2025-09-29","count":0,"level":0},{"date":"2025-09-30","count":3,"level":1},{"date":"2025-10-01","count":4,"level":2},{"date":"2025-10-02","count":0,"level":0},{"date":"2025-10-03","count":6,"level":2},{"date":"2025-10-04","count":10,"level":4}]},{"days":[{"date":"2025-10-05","count":0,"level":0},{"date":"2025-10-06","count":7,"level":3},{"date":"2025-10-07","count":1,"level":1},{"date":"2025-10-08","count":0,"level":0},{"date":"2025-10-09","count":12,"level":4},{"date":"2025-10-10","count":0,"level":0},{"date":"2025-10-11","count":0,"level":0}]},{"days":[{"date":"2025-10-12","count":11,"level":4},{"date":"2025-10-13","count":1,"level":1},{"date":"2025-10-14","count":5,"level":2},{"date":"2025-10-15","count":0,"level":0},{"date":"2025-10-16","count":7,"level":3},{"date":"2025-10-17","count":8,"level":3},{"date":"2025-10-18","count":0,"level":0}]},{"days":[{"date":"2025-10-19","count":8,"level":3},{"date":"2025-10-20","count":6,"level":2},{"date":"2025-10-21","count":0,"level":0},{"date":"2025-10-22","count":0,"level":0},{"date":"2025-10-23","count":12,"level":4},{"date":"2025-10-24","count":0,"level":0},{"date":"2025-10-25","count":9,"level":3}]},{"days":[{"date":"2025-10-26","count":4,"level":2},{"date":"2025-10-27","count":4,"level":2},{"date":"2025-10-28","count":6,"level":2},{"date":"2025-10-29","count":0,"level":0},{"date":"2025-10-30","count":0,"level":0},{"date":"2025-10-31","count":0,"level":0},{"date":"2025-11-01","count":12,"level":4}]},{"days":[{"date":"2025-11-02","count":0,"level":0},{"date":"2025-11-03","count":10,"level":4},{"date":"2025-11-04","count":0,"level":0},{"date":"2025-11-05","count":12,"level":4},{"date":"2025-11-06","count":1,"level":1},{"date":"2025-11-07","count":10,"level":4},{"date":"2025-11-08","count":7,"level":3}]},{"days":[{"date":"2025-11-09","count":6,"level":2},{"date":"2025-11-10","count":0,"level":0},{"date":"2025-11-11","count":6,"level":2},{"date":"2025-11-12","count":6,"level":2},{"date":"2025-11-13","count":7,"level":3},{"date":"2025-11-14","count":2,"level":1},{"date":"2025-11-15","count":0,"level":0}]},{"days":[{"date":"2025-11-16","count":2,"level":1},{"date":"2025-11-17","count":0,"level":0},{"date":"2025-11-18","count":0,"level":0},{"date":"2025-11-19","count":0,"level":0},{"date":"2025-11-20","count":2,"level":1},{"date":"2025-11-21","count":5,"level":2},{"date":"2025-11-22","count":4,"level":2}]},{"days":[{"date":"2025-11-23","count":4,"level":2},{"date":"2025-11-24","count":10,"level":4},{"date":"2025-11-25","count":6,"level":2},{"date":"2025-11-26","count":8,"level":3},{"date":"2025-11-27","count":0,"level":0},{"date":"2025-11-28","count":8,"level":3},{"date":"2025-11-29","count":1,"level":1}]},{"days":[{"date":"2025-11-30","count":0,"level":0},{"date":"2025-12-01","count":0,"level":0},{"date":"2025-12-02","count":0,"level":0},{"date":"2025-12-03","count":8,"level":3},{"date":"2025-12-04","count":6,"level":2},{"date":"2025-12-05","count":0,"level":0},{"date":"2025-12-06","count":2,"level":1}]},{"days":[{"date":"2025-12-07","count":11,"level":4},{"date":"2025-12-08","count":7,"level":3},{"date":"2025-12-09","count":6,"level":2},{"date":"2025-12-10","count":1,"level":1},{"date":"2025-12-11","count":0,"level":0},{"date":"2025-12-12","count":0,"level":0},{"date":"2025-12-13","count":0,"level":0}]},{"days":[{"date":"2025-12-14","count":12,"level":4},{"date":"2025-12-15","count":10,"level":4},{"date":"2025-12-16","count":1,"level":1},{"date":"2025-12-17","count":7,"level":3},{"date":"2025-12-18","count":0,"level":0},{"date":"2025-12-19","count":6,"level":2},{"date":"2025-12-20","count":11,"level":4}]},{"days":[{"date":"2025-12-21","count":5,"level":2},{"date":"2025-12-22","count":0,"level":0},{"date":"2025-12-23","count":2,"level":1},{"date":"2025-12-24","count":0,"level":0},{"date":"2025-12-25","count":7,"level":3},{"date":"2025-12-26","count":5,"level":2},{"date":"2025-12-27","count":12,"level":4}]},{"days":[{"date":"2025-12-28","count":10,"level":4},{"date":"2025-12-29","count":5,"level":2},{"date":"2025-12-30","count":0,"level":0},{"date":"2025-12-31","count":8,"level":3},{"date":"2026-01-01","count":0,"level":0},{"date":"2026-01-02","count":0,"level":0},{"date":"2026-01-03","count":6,"level":2}]},{"days":[{"date":"2026-01-04","count":0,"level":0},{"date":"2026-01-05","count":0,"level":0},{"date":"2026-01-06","count":0,"level":0},{"date":"2026-01-07","count":0,"level":0},{"date":"2026-01-08","count":4,"level":2},{"date":"2026-01-09","count":2,"level":1},{"date":"2026-01-10","count":5,"level":2}]},{"days":[{"date":"2026-01-11","count":2,"level":1},{"date":"2026-01-12","count":6,"level":2},{"date":"2026-01-13","count":0,"level":0},{"date":"2026-01-14","count":0,"level":0},{"date":"2026-01-15","count":0,"level":0},{"date":"2026-01-16","count":4,"level":2},{"date":"2026-01-17","count":0,"level":0}]},{"days":[{"date":"2026-01-18","count":5,"level":2},{"date":"2026-01-19","count":4,"level":2},{"date":"2026-01-20","count":0,"level":0},{"date":"2026-01-21","count":6,"level":2},{"date":"2026-01-22","count":10,"level":4},{"date":"2026-01-23","count":9,"level":3},{"date":"2026-01-24","count":0,"level":0}]},{"days":[{"date":"2026-01-25","count":0,"level":0},{"date":"2026-01-26","count":10,"level":4},{"date":"2026-01-27","count":12,"level":4},{"date":"2026-01-28","count":8,"level":3},{"date":"2026-01-29","count":10,"level":4},{"date":"2026-01-30","count":0,"level":0},{"date":"2026-01-31","count":6,"level":2}]},{"days":[{"date":"2026-02-01","count":0,"level":0},{"date":"2026-02-02","count":8,"level":3},{"date":"2026-02-03","count":3,"level":1},{"date":"2026-02-04","count":0,"level":0},{"date":"2026-02-05","count":0,"level":0},{"date":"2026-02-06","count":6,"level":2},{"date":"2026-02-07","count":0,"level":0}]},{"days":[{"date":"2026-02-08","count":3,"level":1},{"date":"2026-02-09","count":1,"level":1},{"date":"2026-02-10","count":0,"level":0},{"date":"2026-02-11","count":4,"level":2},{"date":"2026-02-12","count":12,"level":4},{"date":"2026-02-13","count":0,"level":0},{"date":"2026-02-14","count":0,"level":0}]},{"days":[{"date":"2026-02-15","count":8,"level":3},{"date":"2026-02-16","count":0,"level":0},{"date":"2026-02-17","count":5,"level":2},{"date":"2026-02-18","count":0,"level":0},{"date":"2026-02-19","count":2,"level":1},{"date":"2026-02-20","count":0,"level":0},{"date":"2026-02-21","count":0,"level":0}]},{"days":[{"date":"2026-02-22","count":0,"level":0},{"date":"2026-02-23","count":0,"level":0},{"date":"2026-02-24","count":9,"level":3},{"date":"2026-02-25","count":0,"level":0},{"date":"2026-02-26","count":8,"level":3},{"date":"2026-02-27","count":8,"level":3},{"date":"2026-02-28","count":3,"level":1}]},{"days":[{"date":"2026-03-01","count":3,"level":1},{"date":"2026-03-02","count":0,"level":0},{"date":"2026-03-03","count":3,"level":1},{"date":"2026-03-04","count":5,"level":2},{"date":"2026-03-05","count":0,"level":0},{"date":"2026-03-06","count":0,"level":0},{"date":"2026-03-07","count":0,"level":0}]},{"days":[{"date":"2026-03-08","count":0,"level":0},{"date":"2026-03-09","count":12,"level":4},{"date":"2026-03-10","count":0,"level":0},{"date":"2026-03-11","count":4,"level":2},{"date":"2026-03-12","count":12,"level":4},{"date":"2026-03-13","count":9,"level":3},{"date":"2026-03-14","count":0,"level":0}]},{"days":[{"date":"2026-03-15","count":5,"level":2},{"date":"2026-03-16","count":3,"level":1},{"date":"2026-03-17","count":7,"level":3},{"date":"2026-03-18","count":1,"level":1},{"date":"2026-03-19","count":0,"level":0},{"date":"2026-03-20","count":0,"level":0},{"date":"2026-03-21","count":0,"level":0}]},{"days":[{"date":"2026-03-22","count":2,"level":1},{"date":"2026-03-23","count":0,"level":0},{"date":"2026-03-24","count":2,"level":1},{"date":"2026-03-25","count":3,"level":1},{"date":"2026-03-26","count":0,"level":0},{"date":"2026-03-27","count":0,"level":0},{"date":"2026-03-28","count":0,"level":0}]},{"days":[{"date":"2026-03-29","count":0,"level":0},{"date":"2026-03-30","count":8,"level":3},{"date":"2026-03-31","count":0,"level":0},{"date":"2026-04-01","count":0,"level":0},{"date":"2026-04-02","count":6,"level":2},{"date":"2026-04-03","count":0,"level":0},{"date":"2026-04-04","count":11,"level":4}]},{"days":[{"date":"2026-04-05","count":0,"level":0},{"date":"2026-04-06","count":0,"level":0},{"date":"2026-04-07","count":3,"level":1},{"date":"2026-04-08","count":3,"level":1},{"date":"2026-04-09","count":1,"level":1},{"date":"2026-04-10","count":1,"level":1},{"date":"2026-04-11","count":0,"level":0}]},{"days":[{"date":"2026-04-12","count":8,"level":3},{"date":"2026-04-13","count":0,"level":0},{"date":"2026-04-14","count":10,"level":4},{"date":"2026-04-15","count":3,"level":1},{"date":"2026-04-16","count":12,"level":4},{"date":"2026-04-17","count":0,"level":0},{"date":"2026-04-18","count":0,"level":0}]},{"days":[{"date":"2026-04-19","count":2,"level":1},{"date":"2026-04-20","count":0,"level":0},{"date":"2026-04-21","count":0,"level":0},{"date":"2026-04-22","count":0,"level":0},{"date":"2026-04-23","count":0,"level":0},{"date":"2026-04-24","count":0,"level":0},{"date":"2026-04-25","count":3,"level":1}]},{"days":[{"date":"2026-04-26","count":9,"level":3},{"date":"2026-04-27","count":1,"level":1},{"date":"2026-04-28","count":0,"level":0},{"date":"2026-04-29","count":0,"level":0},{"date":"2026-04-30","count":9,"level":3},{"date":"2026-05-01","count":0,"level":0},{"date":"2026-05-02","count":3,"level":1}]},{"days":[{"date":"2026-05-03","count":0,"level":0},{"date":"2026-05-04","count":0,"level":0},{"date":"2026-05-05","count":0,"level":0},{"date":"2026-05-06","count":0,"level":0},{"date":"2026-05-07","count":0,"level":0},{"date":"2026-05-08","count":0,"level":0},{"date":"2026-05-09","count":0,"level":0}]},{"days":[{"date":"2026-05-10","count":0,"level":0},{"date":"2026-05-11","count":3,"level":1},{"date":"2026-05-12","count":12,"level":4},{"date":"2026-05-13","count":0,"level":0},{"date":"2026-05-14","count":2,"level":1},{"date":"2026-05-15","count":12,"level":4},{"date":"2026-05-16","count":0,"level":0}]},{"days":[{"date":"2026-05-17","count":6,"level":2},{"date":"2026-05-18","count":0,"level":0},{"date":"2026-05-19","count":8,"level":3},{"date":"2026-05-20","count":0,"level":0},{"date":"2026-05-21","count":11,"level":4},{"date":"2026-05-22","count":0,"level":0},{"date":"2026-05-23","count":12,"level":4}]},{"days":[{"date":"2026-05-24","count":3,"level":1},{"date":"2026-05-25","count":3,"level":1},{"date":"2026-05-26","count":5,"level":2},{"date":"2026-05-27","count":0,"level":0},{"date":"2026-05-28","count":8,"level":3},{"date":"2026-05-29","count":0,"level":0},{"date":"2026-05-30","count":2,"level":1}]},{"days":[{"date":"2026-05-31","count":0,"level":0},{"date":"2026-06-01","count":10,"level":4},{"date":"2026-06-02","count":5,"level":2},{"date":"2026-06-03","count":9,"level":3},{"date":"2026-06-04","count":8,"level":3},{"date":"2026-06-05","count":0,"level":0},{"date":"2026-06-06","count":12,"level":4}]},{"days":[{"date":"2026-06-07","count":6,"level":2},{"date":"2026-06-08","count":10,"level":4},{"date":"2026-06-09","count":10,"level":4},{"date":"2026-06-10","count":0,"level":0},{"date":"2026-06-11","count":0,"level":0},{"date":"2026-06-12","count":8,"level":3},{"date":"2026-06-13","count":0,"level":0}]},{"days":[{"date":"2026-06-14","count":2,"level":1},{"date":"2026-06-15","count":6,"level":2},{"date":"2026-06-16","count":9,"level":3},{"date":"2026-06-17","count":0,"level":0},{"date":"2026-06-18","count":12,"level":4},{"date":"2026-06-19","count":0,"level":0},{"date":"2026-06-20","count":0,"level":0}]},{"days":[{"date":"2026-06-21","count":0,"level":0},{"date":"2026-06-22","count":0,"level":0},{"date":"2026-06-23","count":0,"level":0},{"date":"2026-06-24","count":12,"level":4},{"date":"2026-06-25","count":5,"level":2},{"date":"2026-06-26","count":0,"level":0},{"date":"2026-06-27","count":0,"level":0}]},{"days":[{"date":"2026-06-28","count":0,"level":0},{"date":"2026-06-29","count":7,"level":3},{"date":"2026-06-30","count":8,"level":3},{"date":"2026-07-01","count":0,"level":0},{"date":"2026-07-02","count":11,"level":4},{"date":"2026-07-03","count":0,"level":0},{"date":"2026-07-04","count":4,"level":2}]},{"days":[{"date":"2026-07-05","count":6,"level":2},{"date":"2026-07-06","count":0,"level":0},{"date":"2026-07-07","count":6,"level":2},{"date":"2026-07-08","count":5,"level":2},{"date":"2026-07-09","count":3,"level":1},{"date":"2026-07-10","count":2,"level":1},{"date":"2026-07-11","count":7,"level":3}]},{"days":[{"date":"2026-07-12","count":0,"level":0},{"date":"2026-07-13","count":8,"level":3},{"date":"2026-07-14","count":4,"level":2},{"date":"2026-07-15","count":7,"level":3},{"date":"2026-07-16","count":1,"level":1},{"date":"2026-07-17","count":8,"level":3},{"date":"2026-07-18","count":5,"level":2}]},{"days":[{"date":"2026-07-19","count":0,"level":0},{"date":"2026-07-20","count":0,"level":0},{"date":"2026-07-21","count":0,"level":0},{"date":"2026-07-22","count":0,"level":0},{"date":"2026-07-23","count":8,"level":3},{"date":"2026-07-24","count":0,"level":0},{"date":"2026-07-25","count":0,"level":0}]},{"days":[{"date":"2026-07-26","count":4,"level":2},{"date":"2026-07-27","count":0,"level":0},{"date":"2026-07-28","count":1,"level":1},{"date":"2026-07-29","count":7,"level":3},{"date":"2026-07-30","count":2,"level":1},{"date":"2026-07-31","count":12,"level":4},{"date":"2026-08-01","count":4,"level":2}]},{"days":[{"date":"2026-08-02","count":5,"level":2},{"date":"2026-08-03","count":0,"level":0},{"date":"2026-08-04","count":0,"level":0},{"date":"2026-08-05","count":0,"level":0},{"date":"2026-08-06","count":3,"level":1},{"date":"2026-08-07","count":11,"level":4},{"date":"2026-08-08","count":0,"level":0}]},{"days":[{"date":"2026-08-09","count":2,"level":1},{"date":"2026-08-10","count":0,"level":0},{"date":"2026-08-11","count":10,"level":4},{"date":"2026-08-12","count":0,"level":0},{"date":"2026-08-13","count":0,"level":0},{"date":"2026-08-14","count":9,"level":3},{"date":"2026-08-15","count":0,"level":0}]},{"days":[{"date":"2026-08-16","count":2,"level":1},{"date":"2026-08-17","count":8,"level":3},{"date":"2026-08-18","count":9,"level":3},{"date":"2026-08-19","count":0,"level":0},{"date":"2026-08-20","count":0,"level":0},{"date":"2026-08-21","count":0,"level":0},{"date":"2026-08-22","count":0,"level":0}]},{"days":[{"date":"2026-08-23","count":0,"level":0},{"date":"2026-08-24","count":7,"level":3},{"date":"2026-08-25","count":0,"level":0},{"date":"2026-08-26","count":10,"level":4},{"date":"2026-08-27","count":0,"level":0},{"date":"2026-08-28","count":12,"level":4},{"date":"2026-08-29","count":6,"level":2}]},{"days":[{"date":"2026-08-30","count":2,"level":1},{"date":"2026-08-31","count":0,"level":0},{"date":"2026-09-01","count":12,"level":4},{"date":"2026-09-02","count":11,"level":4},{"date":"2026-09-03","count":1,"level":1},{"date":"2026-09-04","count":9,"level":3},{"date":"2026-09-05","count":3,"level":1}]},{"days":[{"date":"2026-09-06","count":2,"level":1},{"date":"2026-09-07","count":0,"level":0},{"date":"2026-09-08","count":3,"level":1},{"date":"2026-09-09","count":0,"level":0},{"date":"2026-09-10","count":0,"level":0},{"date":"2026-09-11","count":11,"level":4},{"date":"2026-09-12","count":9,"level":3}]},{"days":[{"date":"2026-09-13","count":0,"level":0},{"date":"2026-09-14","count":0,"level":0},{"date":"2026-09-15","count":0,"level":0},{"date":"2026-09-16","count":11,"level":4},{"date":"2026-09-17","count":11,"level":4},{"date":"2026-09-18","count":0,"level":0},{"date":"2026-09-19","count":11,"level":4}]}]},"theme":{"skin":"arcade","group":"basicos","dropMulti":"#fbbf24","dropWide":"#34d399","ball":"#ffffff","page":"#06140c","lifeEmpty":"#3f3f46","maze":"#166534","player":"#4ade80","pellet":"#86efac","power":"#fbbf24","bugs":["#86efac","#22c55e","#16a34a","#15803d"],"scared":"#1d4ed8","scaredFlash":"#f8fafc","id":"verde","name":"Verde","background":"#06140c","court":"#0b1f14","frame":"#166534","paddle":"#dcfce7","paddleEdge":"#4ade80","ballGlow":"#86efac","hud":"#f0fdf4","hudMuted":"#86efac","life":"#22c55e","levels":["#052e16","#15803d","#16a34a","#22c55e","#86efac"],"brickHi":"#dcfce7","brickLo":"#14532d"},"config":{"cell":13,"gap":2,"header":34,"pad":16,"footer":38,"fps":16,"gameSeconds":28,"playerSpeed":102,"bugSpeed":52,"scareSpeed":36,"frightenedSeconds":5,"respawnSeconds":10,"lives":5,"specialDays":10,"startBugs":4,"maxBugs":8,"eatRange":0.55,"dangerTiles":3,"shyRange":8,"scatterSeconds":6,"chaseSeconds":12,"releaseSeconds":[0,2,5.5,10]}}</script>
+  <script>
+const CONFIG = {
+  cell: 13,
+  gap: 2,
+  header: 34,
+  pad: 16,
+  footer: 38,
+  fps: 16,
+  gameSeconds: 28,
+  playerSpeed: 102,
+  bugSpeed: 52,
+  scareSpeed: 36,
+  frightenedSeconds: 5,
+  respawnSeconds: 10,
+  lives: 5,
+  specialDays: 10,
+  startBugs: 4,
+  maxBugs: 8,
+  eatRange: 0.55,
+  dangerTiles: 3,
+  shyRange: 8,
+  scatterSeconds: 6,
+  chaseSeconds: 12,
+  releaseSeconds: [0, 2, 5.5, 10],
+};
+
+const DIRS = {
+  left: { x: -1, y: 0, name: "left" },
+  right: { x: 1, y: 0, name: "right" },
+  up: { x: 0, y: -1, name: "up" },
+  down: { x: 0, y: 1, name: "down" },
+};
+
+const DIR_LIST = [DIRS.left, DIRS.right, DIRS.up, DIRS.down];
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function opposite(dir) {
+  if (!dir) return null;
+  return DIR_LIST.find((item) => item.x === -dir.x && item.y === -dir.y) || null;
+}
+
+function layoutFrom(calendar, config = CONFIG) {
+  const cols = Math.max(1, calendar.weeks?.length || 1);
+  const rows = 7;
+  const stride = config.cell + config.gap;
+  const gridW = cols * stride - config.gap;
+  const gridH = rows * stride - config.gap;
+  const gridX = config.pad;
+  const gridY = config.header + 4;
+  return {
+    cols,
+    rows,
+    cell: config.cell,
+    gap: config.gap,
+    stride,
+    pad: config.pad,
+    header: config.header,
+    footer: config.footer,
+    width: config.pad * 2 + gridW,
+    height: gridY + gridH + config.footer,
+    gridX,
+    gridY,
+    gridW,
+    gridH,
+    playerR: config.cell * 0.42,
+    bugR: config.cell * 0.36,
+  };
+}
+
+function inGrid(layout, c, r) {
+  return c >= 0 && r >= 0 && c < layout.cols && r < layout.rows;
+}
+
+function tileCenter(layout, c, r) {
+  return {
+    x: layout.gridX + c * layout.stride + layout.cell / 2,
+    y: layout.gridY + r * layout.stride + layout.cell / 2,
+  };
+}
+
+function tileOf(layout, x, y) {
+  return {
+    c: clamp(Math.floor((x - layout.gridX) / layout.stride), 0, layout.cols - 1),
+    r: clamp(Math.floor((y - layout.gridY) / layout.stride), 0, layout.rows - 1),
+  };
+}
+
+function neighbors(layout, c, r) {
+  const out = [];
+  for (const dir of DIR_LIST) {
+    const nc = c + dir.x;
+    const nr = r + dir.y;
+    if (inGrid(layout, nc, nr)) out.push({ c: nc, r: nr, dir });
+  }
+  return out;
+}
+
+function mapCells(calendar, layout) {
+  const cells = [];
+  (calendar.weeks || []).forEach((week, c) => {
+    (week.days || []).forEach((day, r) => {
+      if (r > 6) return;
+      const pos = tileCenter(layout, c, r);
+      cells.push({
+        c,
+        r,
+        x: layout.gridX + c * layout.stride,
+        y: layout.gridY + r * layout.stride,
+        cx: pos.x,
+        cy: pos.y,
+        w: layout.cell,
+        h: layout.cell,
+        level: day.level || 0,
+        count: day.count || 0,
+        date: day.date,
+      });
+    });
+  });
+  return cells;
+}
+
+function pelletsFrom(calendar, layout) {
+  const pellets = mapCells(calendar, layout)
+    .filter((cell) => cell.count > 0 && cell.level > 0)
+    .map((cell) => ({
+      id: `${cell.c}-${cell.r}-${cell.date}`,
+      c: cell.c,
+      r: cell.r,
+      x: cell.cx,
+      y: cell.cy,
+      level: cell.level,
+      count: cell.count,
+      date: cell.date,
+      power: false,
+      eaten: false,
+      eatenAt: null,
+    }));
+  const ranked = pellets.slice().sort((a, b) => (b.count || 0) - (a.count || 0) || String(a.date).localeCompare(String(b.date)));
+  for (const pellet of ranked.slice(0, CONFIG.specialDays)) pellet.power = true;
+  return pellets;
+}
+
+function firstEmpty(layout, cells) {
+  const empty = cells.find((cell) => !cell.count) || cells[0];
+  return empty ? { c: empty.c, r: empty.r } : { c: 0, r: 3 };
+}
+
+function bugHomes(layout, playerSpawn) {
+  const homes = [];
+  const corners = [
+    { c: layout.cols - 1, r: 0 },
+    { c: layout.cols - 1, r: layout.rows - 1 },
+    { c: Math.floor(layout.cols * 0.75), r: 0 },
+    { c: Math.floor(layout.cols * 0.75), r: layout.rows - 1 },
+    { c: layout.cols - 2, r: 3 },
+    { c: Math.floor(layout.cols * 0.6), r: 6 },
+    { c: layout.cols - 3, r: 1 },
+    { c: Math.floor(layout.cols * 0.85), r: 5 },
+  ];
+  for (const home of corners) {
+    const c = clamp(home.c, 0, layout.cols - 1);
+    const r = clamp(home.r, 0, layout.rows - 1);
+    if (c === playerSpawn.c && r === playerSpawn.r) continue;
+    homes.push({ c, r });
+  }
+  if (!homes.length) homes.push({ c: layout.cols - 1, r: 0 });
+  return homes;
+}
+
+function makeActor(layout, spawn, dir) {
+  const pos = tileCenter(layout, spawn.c, spawn.r);
+  return { c: spawn.c, r: spawn.r, x: pos.x, y: pos.y, dir, nextDir: dir };
+}
+
+function makeBug(layout, index, colors, homes, elapsed = 0, config = CONFIG) {
+  const spawn = homes[index % homes.length];
+  const bug = makeActor(layout, spawn, index % 2 === 0 ? DIRS.left : DIRS.up);
+  bug.color = colors[index % colors.length] || "#ff0000";
+  bug.scared = false;
+  bug.eaten = false;
+  bug.home = spawn;
+  bug.persona = index % 4;
+  bug.releaseAt = elapsed + releaseDelay(index, config);
+  bug.returnAt = 0;
+  return bug;
+}
+
+function releaseDelay(index, config = CONFIG) {
+  const times = config.releaseSeconds || [0, 2, 5.5, 10];
+  if (index < times.length) return times[index];
+  return times[times.length - 1] + (index - times.length + 1) * 5;
+}
+
+function released(state, bug) {
+  return !bug.eaten && state.elapsed >= (bug.releaseAt || 0);
+}
+
+function remainingPellets(state) {
+  return state.pellets.filter((pellet) => !pellet.eaten);
+}
+
+function livingBugs(state) {
+  return state.bugs.filter((bug) => !bug.eaten);
+}
+
+function atTileCenter(state, actor) {
+  const center = tileCenter(state.layout, actor.c, actor.r);
+  return Math.hypot(actor.x - center.x, actor.y - center.y) < 0.05;
+}
+
+function snapToTile(state, actor) {
+  const center = tileCenter(state.layout, actor.c, actor.r);
+  actor.x = center.x;
+  actor.y = center.y;
+}
+
+function canWalk(state, actor, dir) {
+  return Boolean(dir) && inGrid(state.layout, actor.c + dir.x, actor.r + dir.y);
+}
+
+function pickWalkDir(state, actor) {
+  const options = neighbors(state.layout, actor.c, actor.r);
+  if (actor.nextDir && canWalk(state, actor, actor.nextDir)) return actor.nextDir;
+  if (actor.dir && canWalk(state, actor, actor.dir)) return actor.dir;
+  const rev = opposite(actor.dir);
+  const keep = options.find((step) => !rev || step.dir !== rev);
+  if (keep) return keep.dir;
+  return options[0]?.dir || actor.dir;
+}
+
+function moveActor(state, actor, speed, dt) {
+  if (atTileCenter(state, actor)) {
+    snapToTile(state, actor);
+    actor.dir = pickWalkDir(state, actor);
+    actor.nextDir = actor.nextDir || actor.dir;
+  }
+  if (!canWalk(state, actor, actor.dir)) {
+    actor.dir = pickWalkDir(state, actor);
+    if (!canWalk(state, actor, actor.dir)) return;
+  }
+  const dest = tileCenter(state.layout, actor.c + actor.dir.x, actor.r + actor.dir.y);
+  const dist = Math.max(0, speed * dt);
+  const remain = Math.hypot(dest.x - actor.x, dest.y - actor.y);
+  if (dist >= remain) {
+    actor.c += actor.dir.x;
+    actor.r += actor.dir.y;
+    actor.x = dest.x;
+    actor.y = dest.y;
+  } else {
+    actor.x += actor.dir.x * dist;
+    actor.y += actor.dir.y * dist;
+  }
+}
+
+function dirToward(state, from, goal) {
+  const dc = goal.c - from.c;
+  const dr = goal.r - from.r;
+  if (!dc && !dr) return pickWalkDir(state, from);
+  const horiz = dc > 0 ? DIRS.right : dc < 0 ? DIRS.left : null;
+  const vert = dr > 0 ? DIRS.down : dr < 0 ? DIRS.up : null;
+  const absC = Math.abs(dc);
+  const absR = Math.abs(dr);
+  if (from.dir && horiz && from.dir === horiz) return horiz;
+  if (from.dir && vert && from.dir === vert) return vert;
+  if (absC >= absR && horiz && canWalk(state, from, horiz)) return horiz;
+  if (vert && canWalk(state, from, vert)) return vert;
+  if (horiz && canWalk(state, from, horiz)) return horiz;
+  return pickWalkDir(state, from);
+}
+
+function sweepPellet(state) {
+  const left = remainingPellets(state);
+  if (!left.length) return null;
+  const row = state.player.r;
+  const same = [];
+  for (const pellet of left) {
+    if (pellet.r === row) same.push(pellet);
+  }
+  if (same.length) {
+    const goingRight = !state.player.dir || state.player.dir.x >= 0;
+    let ahead = null;
+    let aheadD = Infinity;
+    let closest = same[0];
+    let closestD = Infinity;
+    for (const pellet of same) {
+      const d = Math.abs(pellet.c - state.player.c);
+      if (d < closestD) {
+        closest = pellet;
+        closestD = d;
+      }
+      const inFront = goingRight ? pellet.c >= state.player.c : pellet.c <= state.player.c;
+      if (inFront && d < aheadD) {
+        ahead = pellet;
+        aheadD = d;
+      }
+    }
+    return ahead || closest;
+  }
+  let best = left[0];
+  let bestD = Infinity;
+  for (const pellet of left) {
+    const d = Math.abs(pellet.r - row) * 80 + Math.abs(pellet.c - state.player.c);
+    if (d < bestD) {
+      best = pellet;
+      bestD = d;
+    }
+  }
+  return best;
+}
+
+function nearestPower(state) {
+  let best = null;
+  let bestD = Infinity;
+  for (const pellet of state.pellets) {
+    if (pellet.eaten || !pellet.power) continue;
+    const d = manhattan(state.player, pellet);
+    if (d < bestD) {
+      best = pellet;
+      bestD = d;
+    }
+  }
+  return best;
+}
+
+function nearestBug(state) {
+  let best = null;
+  let bestD = Infinity;
+  for (const bug of livingBugs(state)) {
+    if (!released(state, bug)) continue;
+    const d = manhattan(state.player, bug);
+    if (d < bestD) {
+      best = bug;
+      bestD = d;
+    }
+  }
+  return best;
+}
+
+function huntingBugs(state) {
+  const out = [];
+  for (const bug of state.bugs) {
+    if (bug.eaten || bug.scared || !released(state, bug)) continue;
+    out.push(bug);
+  }
+  return out;
+}
+
+function minGhostDist(state, tile) {
+  let min = Infinity;
+  for (const bug of huntingBugs(state)) {
+    const d = manhattan(tile, bug);
+    if (d < min) min = d;
+  }
+  return min;
+}
+
+function manhattan(a, b) {
+  return Math.abs(a.c - b.c) + Math.abs(a.r - b.r);
+}
+
+function powered(state) {
+  return state.elapsed < (state.frightUntil || 0);
+}
+
+function scatterMode(state) {
+  const scatter = Math.max(2.5, (state.config.scatterSeconds || 6) - (state.round - 1) * 0.8);
+  const chase = (state.config.chaseSeconds || 12) + (state.round - 1);
+  return state.elapsed % (scatter + chase) < scatter;
+}
+
+function clampTile(layout, c, r) {
+  return { c: clamp(c, 0, layout.cols - 1), r: clamp(r, 0, layout.rows - 1) };
+}
+
+function bugTarget(state, bug, index) {
+  const layout = state.layout;
+  const corners = [
+    { c: layout.cols - 1, r: 0 },
+    { c: 0, r: 0 },
+    { c: layout.cols - 1, r: layout.rows - 1 },
+    { c: 0, r: layout.rows - 1 },
+  ];
+  const scatter = corners[index % 4];
+  const pac = state.player;
+  const dir = pac.dir || DIRS.right;
+  if (scatterMode(state)) return scatter;
+  if ((bug.persona ?? index) % 4 === 3 && manhattan(bug, pac) < (state.config.shyRange || 8)) {
+    return scatter;
+  }
+  if ((bug.persona ?? index) % 4 === 1) {
+    return clampTile(layout, pac.c + dir.x * 4, pac.r + dir.y * 4);
+  }
+  if ((bug.persona ?? index) % 4 === 2) {
+    return clampTile(layout, pac.c + dir.x * 2, pac.r + dir.y * 2);
+  }
+  return { c: pac.c, r: pac.r };
+}
+
+function safeDir(state, preferred) {
+  const options = neighbors(state.layout, state.player.c, state.player.r);
+  if (!options.length) return preferred;
+  const rev = opposite(state.player.dir);
+  const pellet = sweepPellet(state);
+  let best = preferred || options[0].dir;
+  let bestScore = -Infinity;
+  for (const step of options) {
+    const minD = minGhostDist(state, step);
+    let score = minD * 3;
+    if (preferred && step.dir === preferred) score += 1.25;
+    if (rev && step.dir === rev) score -= 1.6;
+    if (pellet) score -= manhattan(step, pellet) * 0.06;
+    if (score > bestScore) {
+      best = step.dir;
+      bestScore = score;
+    }
+  }
+  return best;
+}
+
+function autoplayPlayer(state) {
+  if (powered(state)) {
+    const prey = nearestBug(state);
+    if (prey && manhattan(state.player, prey) <= 12) {
+      state.player.nextDir = dirToward(state, state.player, prey);
+      return;
+    }
+  }
+  const threat = minGhostDist(state, state.player);
+  const power = nearestPower(state);
+  const danger = state.config.dangerTiles || 3;
+  if (!powered(state) && power && threat <= danger + 1 && manhattan(state.player, power) <= 8) {
+    state.player.nextDir = safeDir(state, dirToward(state, state.player, power));
+    return;
+  }
+  const pellet = sweepPellet(state);
+  if (!pellet) return;
+  const preferred = dirToward(state, state.player, pellet);
+  if (!powered(state) && threat <= danger) {
+    state.player.nextDir = safeDir(state, preferred);
+    return;
+  }
+  state.player.nextDir = preferred;
+}
+
+function pickFleeDir(state, bug) {
+  const options = neighbors(state.layout, bug.c, bug.r);
+  const rev = opposite(bug.dir);
+  let best = null;
+  let bestD = -Infinity;
+  for (const step of options) {
+    if (rev && step.dir === rev && options.length > 1) continue;
+    const d = manhattan(step, state.player);
+    if (d > bestD) {
+      best = step;
+      bestD = d;
+    }
+  }
+  return (best || options[0])?.dir || bug.dir;
+}
+
+function autoplayBug(state, bug, index) {
+  if (bug.eaten || !released(state, bug)) return;
+  if (bug.scared) bug.nextDir = pickFleeDir(state, bug);
+  else bug.nextDir = dirToward(state, bug, bugTarget(state, bug, index));
+}
+
+function eatPellets(state) {
+  const pc = state.player.c;
+  const pr = state.player.r;
+  const range = state.layout.cell * state.config.eatRange;
+  for (const pellet of state.pellets) {
+    if (pellet.eaten || pellet.c !== pc || pellet.r !== pr) continue;
+    if (Math.hypot(pellet.x - state.player.x, pellet.y - state.player.y) > range) continue;
+    pellet.eaten = true;
+    pellet.eatenAt = state.elapsed;
+    if (pellet.firstEatenAt == null) pellet.firstEatenAt = state.elapsed;
+    state.live -= 1;
+    state.score += pellet.power ? 80 : Math.max(10, (pellet.count || 1) * 10);
+    if (pellet.power) {
+      state.frightUntil = state.elapsed + state.config.frightenedSeconds;
+      for (const bug of state.bugs) {
+        if (!bug.eaten) bug.scared = true;
+      }
+    }
+  }
+}
+
+function restoreMap(state) {
+  for (const pellet of state.pellets) {
+    pellet.eaten = false;
+    pellet.eatenAt = null;
+  }
+  state.live = state.pellets.length;
+  state.frightUntil = 0;
+}
+
+function loseLife(state) {
+  state.lives -= 1;
+  state.frightUntil = 0;
+  for (const bug of state.bugs) bug.scared = false;
+  resetActors(state);
+  if (state.lives > 0) return;
+  if (state.autoplay) {
+    const next = createState(state.calendar, state.config, {
+      autoplay: true,
+      bugColors: state.bugColors,
+    });
+    Object.assign(state, next);
+    return;
+  }
+  state.mode = "over";
+}
+
+function collideBugs(state) {
+  const range = state.layout.cell * 0.55;
+  for (const bug of state.bugs) {
+    if (bug.eaten || !released(state, bug)) continue;
+    if (Math.abs(bug.c - state.player.c) + Math.abs(bug.r - state.player.r) > 1) continue;
+    if (Math.hypot(bug.x - state.player.x, bug.y - state.player.y) > range) continue;
+    if (bug.scared || powered(state)) {
+      bug.eaten = true;
+      bug.scared = false;
+      state.score += 200;
+      bug.c = bug.home.c;
+      bug.r = bug.home.r;
+      snapToTile(state, bug);
+      bug.dir = DIRS.left;
+      bug.nextDir = DIRS.left;
+      bug.returnAt = state.elapsed + state.config.respawnSeconds;
+      if (state.autoplay) autoplayPlayer(state);
+    } else {
+      loseLife(state);
+      return;
+    }
+  }
+}
+
+function resetActors(state) {
+  const player = makeActor(state.layout, state.playerSpawn, DIRS.right);
+  Object.assign(state.player, player);
+  state.bugs.forEach((bug, index) => {
+    const spawn = state.bugHomes[index % state.bugHomes.length];
+    const pos = tileCenter(state.layout, spawn.c, spawn.r);
+    bug.c = spawn.c;
+    bug.r = spawn.r;
+    bug.x = pos.x;
+    bug.y = pos.y;
+    bug.home = spawn;
+    bug.eaten = false;
+    bug.scared = false;
+    bug.persona = index % 4;
+    bug.releaseAt = state.elapsed + releaseDelay(index, state.config);
+    bug.returnAt = 0;
+    bug.dir = index % 2 === 0 ? DIRS.left : DIRS.up;
+    bug.nextDir = bug.dir;
+  });
+}
+
+function completeRound(state) {
+  state.round += 1;
+  const colors = state.bugColors || ["#ff0000", "#ffb8ff", "#00ffff", "#ffb852"];
+  if (state.bugs.length < state.config.maxBugs) {
+    state.bugs.push(makeBug(state.layout, state.bugs.length, colors, state.bugHomes, state.elapsed, state.config));
+  }
+  restoreMap(state);
+  resetActors(state);
+}
+
+function createState(calendar, config = CONFIG, options = {}) {
+  const layout = layoutFrom(calendar, config);
+  const cells = mapCells(calendar, layout);
+  const pellets = pelletsFrom(calendar, layout);
+  const playerSpawn = firstEmpty(layout, cells);
+  const homes = bugHomes(layout, playerSpawn);
+  const autoplay = options.autoplay !== false;
+  const colors = options.bugColors || ["#ff0000", "#88cc44", "#ffb852", "#00ffff"];
+  const bugs = [];
+  for (let i = 0; i < Math.max(1, config.startBugs); i += 1) {
+    bugs.push(makeBug(layout, i, colors, homes, 0, config));
+  }
+  return {
+    calendar,
+    config,
+    layout,
+    cells,
+    pellets,
+    live: pellets.length,
+    playerSpawn,
+    bugHomes: homes,
+    player: makeActor(layout, playerSpawn, DIRS.right),
+    bugs,
+    bugColors: colors,
+    keys: { left: false, right: false, up: false, down: false },
+    score: 0,
+    lives: config.lives,
+    round: 1,
+    mode: "playing",
+    autoplay,
+    elapsed: 0,
+    frightUntil: 0,
+  };
+}
+
+function restart(calendar, config = CONFIG, options = {}) {
+  return createState(calendar, config, options);
+}
+
+function readKeys(state) {
+  const { keys } = state;
+  if (keys.left) return DIRS.left;
+  if (keys.right) return DIRS.right;
+  if (keys.up) return DIRS.up;
+  if (keys.down) return DIRS.down;
+  return null;
+}
+
+function step(state, dt) {
+  const speed = Math.max(state.config.playerSpeed, state.config.bugSpeed + state.round * 3);
+  const slices = Math.max(1, Math.ceil((speed * dt) / (state.layout.cell * 0.28)));
+  const slice = dt / slices;
+  for (let i = 0; i < slices; i += 1) advance(state, slice);
+}
+
+function advance(state, dt) {
+  if (state.mode === "over" || state.mode === "won") return;
+  state.elapsed += dt;
+  if (state.elapsed > state.frightUntil) {
+    for (const bug of state.bugs) bug.scared = false;
+  }
+  for (const bug of state.bugs) {
+    if (bug.eaten && state.elapsed >= (bug.returnAt || 0)) {
+      bug.eaten = false;
+      bug.scared = powered(state);
+      bug.c = bug.home.c;
+      bug.r = bug.home.r;
+      snapToTile(state, bug);
+      const idx = state.bugs.indexOf(bug);
+      bug.nextDir = bug.scared ? pickFleeDir(state, bug) : dirToward(state, bug, bugTarget(state, bug, idx));
+      bug.dir = bug.nextDir;
+    }
+  }
+  collideBugs(state);
+
+  if (state.autoplay) autoplayPlayer(state);
+  else {
+    const wanted = readKeys(state);
+    if (wanted) state.player.nextDir = wanted;
+  }
+
+  moveActor(state, state.player, state.config.playerSpeed, dt);
+  eatPellets(state);
+
+  state.bugs.forEach((bug, index) => {
+    if (bug.eaten || !released(state, bug)) return;
+    autoplayBug(state, bug, index);
+    const speed = bug.scared
+      ? state.config.scareSpeed
+      : Math.max(32, state.config.bugSpeed + state.round * 2 - index * 2);
+    moveActor(state, bug, speed, dt);
+  });
+  collideBugs(state);
+
+  if (state.live <= 0 && state.pellets.length) completeRound(state);
+}
+
+function simulate(calendar, config = CONFIG, options = {}) {
+  const state = createState(calendar, config, { ...options, autoplay: true });
+  const dt = 1 / config.fps;
+  const total = config.gameSeconds;
+  const frames = [];
+  while (state.elapsed < total - dt / 2) {
+    step(state, dt);
+    frames.push({
+      t: state.elapsed,
+      playerX: state.player.x,
+      playerY: state.player.y,
+      playerDir: state.player.dir?.name || "right",
+      bugs: state.bugs.map((bug) => ({
+        x: bug.x,
+        y: bug.y,
+        scared: bug.scared,
+        eaten: bug.eaten,
+        color: bug.color,
+      })),
+    });
+  }
+  return {
+    calendar,
+    config,
+    layout: state.layout,
+    cells: state.cells,
+    pellets: state.pellets.map((pellet) => ({ ...pellet })),
+    frames,
+    total,
+    dt,
+    round: state.round,
+    score: state.score,
+  };
+}
+
+
+const DATA = JSON.parse(document.getElementById("data").textContent);
+const stage = document.getElementById("stage");
+const canvas = document.getElementById("game");
+const hint = document.getElementById("hint");
+const ctx = canvas.getContext("2d");
+const options = { autoplay: true, bugColors: DATA.theme.bugs };
+let state = createState(DATA.calendar, DATA.config, options);
+
+function resize() {
+  const { width, height } = state.layout;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  canvas.width = Math.floor(width * dpr);
+  canvas.height = Math.floor(height * dpr);
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function syncHint() {
+  if (!state.autoplay && state.mode === "over") {
+    hint.textContent = "Sem vidas. Clique para jogar de novo, ou clique fora para o automatico.";
+    return;
+  }
+  hint.textContent = state.autoplay
+    ? "Automatico. Clique para jogar · WASD ou setas"
+    : "Voce controla · WASD ou setas · clique fora volta o automatico";
+}
+
+function drawMap() {
+  const { layout } = state;
+  ctx.fillStyle = DATA.theme.background;
+  ctx.fillRect(0, 0, layout.width, layout.height);
+  ctx.fillStyle = DATA.theme.court;
+  ctx.fillRect(layout.gridX - 6, layout.gridY - 6, layout.gridW + 12, layout.gridH + 12);
+  ctx.strokeStyle = DATA.theme.maze || DATA.theme.frame;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(layout.gridX - 6.5, layout.gridY - 6.5, layout.gridW + 13, layout.gridH + 13);
+  for (const cell of state.cells) {
+    const pellet = state.pellets.find((item) => item.c === cell.c && item.r === cell.r);
+    const live = cell.count > 0 && pellet && !pellet.eaten;
+    ctx.fillStyle = live ? DATA.theme.levels[cell.level] : DATA.theme.levels[0];
+    ctx.beginPath();
+    ctx.roundRect(cell.x, cell.y, cell.w, cell.h, 2);
+    ctx.fill();
+    if (live && pellet.power) {
+      ctx.strokeStyle = DATA.theme.power;
+      ctx.lineWidth = 1.6;
+      ctx.strokeRect(cell.x + 1, cell.y + 1, cell.w - 2, cell.h - 2);
+    }
+  }
+}
+
+function drawPlayer() {
+  const mouth = (Math.sin(state.elapsed * 16) + 1) * 0.32;
+  const dir = state.player.dir || { x: 1, y: 0 };
+  const angle = Math.atan2(dir.y, dir.x);
+  ctx.fillStyle = DATA.theme.player;
+  ctx.beginPath();
+  ctx.moveTo(state.player.x, state.player.y);
+  ctx.arc(state.player.x, state.player.y, state.layout.playerR, angle + mouth, angle + Math.PI * 2 - mouth);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawBug(bug) {
+  if (bug.eaten) return;
+  const t = state.elapsed;
+  const flash = bug.scared && Math.floor(t * 8) % 2 === 0;
+  const color = bug.scared ? (flash ? DATA.theme.scaredFlash : DATA.theme.scared) : bug.color;
+  const x = bug.x;
+  const y = bug.y;
+  const r = state.layout.bugR;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(Math.sin(t * 8) * 0.12);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.1;
+  ctx.lineCap = "round";
+  for (let i = -1; i <= 1; i += 1) {
+    const wobble = Math.sin(t * 14 + i) * 1.2;
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.2, 0);
+    ctx.lineTo(-r * 1.15, i * 2.1 + wobble);
+    ctx.moveTo(r * 0.2, 0);
+    ctx.lineTo(r * 1.15, i * 2.1 - wobble);
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  ctx.moveTo(-1.4, -r * 0.7);
+  ctx.quadraticCurveTo(-2.4, -r * 1.5, -3.2, -r * 1.7);
+  ctx.moveTo(1.4, -r * 0.7);
+  ctx.quadraticCurveTo(2.4, -r * 1.5, 3.2, -r * 1.7);
+  ctx.stroke();
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.ellipse(0, 0.4, r * 0.85, r * 0.62, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(0, -r * 0.45, r * 0.48, r * 0.42, 0, 0, Math.PI * 2);
+  ctx.fill();
+  if (!bug.eaten) {
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.arc(-1.3, -r * 0.5, 1.15, 0, Math.PI * 2);
+    ctx.arc(1.3, -r * 0.5, 1.15, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#111";
+    ctx.beginPath();
+    ctx.arc(-1.15, -r * 0.45, 0.55, 0, Math.PI * 2);
+    ctx.arc(1.45, -r * 0.45, 0.55, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawHud() {
+  const { layout } = state;
+  ctx.fillStyle = DATA.theme.hud;
+  ctx.font = "13px ui-monospace, monospace";
+  ctx.textAlign = "left";
+  ctx.fillText("PAC-MAN · BUGS" + (DATA.theme.id === "pacman" ? "" : " · " + DATA.theme.name.toUpperCase()), layout.pad, 22);
+  ctx.textAlign = "right";
+  ctx.fillStyle = DATA.theme.hudMuted;
+  ctx.fillText("R" + state.round + "  " + state.score + "  " + DATA.calendar.total + " commits", layout.width - layout.pad, 22);
+  for (let i = 0; i < DATA.config.lives; i += 1) {
+    ctx.beginPath();
+    ctx.fillStyle = i < state.lives ? DATA.theme.life : DATA.theme.lifeEmpty;
+    ctx.arc(layout.pad + 8 + i * 14, layout.height - 14, 4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function draw() {
+  drawMap();
+  for (const bug of state.bugs) drawBug(bug);
+  drawPlayer();
+  drawHud();
+}
+
+function playNow() {
+  state = restart(DATA.calendar, DATA.config, { autoplay: false, bugColors: DATA.theme.bugs });
+  syncHint();
+}
+
+function demoNow() {
+  state = restart(DATA.calendar, DATA.config, { autoplay: true, bugColors: DATA.theme.bugs });
+  state.keys.left = state.keys.right = state.keys.up = state.keys.down = false;
+  syncHint();
+}
+
+stage.addEventListener("click", () => stage.focus());
+stage.addEventListener("focus", () => {
+  if (state.autoplay || state.mode === "over") playNow();
+});
+stage.addEventListener("blur", () => demoNow());
+
+function handleKey(event, down) {
+  if (state.autoplay) return;
+  const map = {
+    ArrowLeft: "left", a: "left", A: "left",
+    ArrowRight: "right", d: "right", D: "right",
+    ArrowUp: "up", w: "up", W: "up",
+    ArrowDown: "down", s: "down", S: "down",
+  };
+  const key = map[event.key];
+  if (!key) return;
+  event.preventDefault();
+  state.keys.left = state.keys.right = state.keys.up = state.keys.down = false;
+  state.keys[key] = down;
+}
+
+window.addEventListener("keydown", (event) => handleKey(event, true));
+window.addEventListener("keyup", (event) => handleKey(event, false));
+
+let last = performance.now();
+function loop(now) {
+  const dt = Math.min(0.034, (now - last) / 1000);
+  last = now;
+  step(state, dt);
+  syncHint();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+resize();
+syncHint();
+requestAnimationFrame(loop);
+
+  </script>
+</body>
+</html>

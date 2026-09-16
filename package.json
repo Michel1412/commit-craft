@@ -1,7 +1,7 @@
 {
   "name": "commit-breaker",
-  "version": "1.0.0",
-  "description": "Commit Breaker: gera o Block Breaker dos commits anuais para o README.",
+  "version": "2.0.0",
+  "description": "O grafico de contribuicoes do ultimo ano vira Block Breaker ou Pac-Man no README.",
   "type": "module",
   "bin": {
     "commit-breaker": "./src/cli.js"
@@ -19,6 +19,7 @@
     "readme",
     "contribution-graph",
     "block-breaker",
+    "pac-man",
     "svg"
   ]
 }

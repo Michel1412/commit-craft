@@ -1,5 +1,5 @@
 name: "Commit Breaker"
-description: "Commit Breaker: gera o Block Breaker dos commits anuais para colar no README."
+description: "O grafico de contribuicoes do ultimo ano vira Block Breaker ou Pac-Man no README."
 author: "Michel Bocchi Junior"
 branding:
   icon: box
@@ -7,14 +7,14 @@ branding:
 
 inputs:
   github_user_name:
-    description: "Usuario GitHub cujo calendario anual de contribuicoes (no GitHub inteiro) vira os tijolos."
+    description: "Usuario GitHub cujo calendario anual de contribuicoes (no GitHub inteiro) vira os objetivos do jogo."
     required: true
   github_token:
     description: "Token para ler o calendario. O GITHUB_TOKEN padrao ve contribuicoes publicas."
     required: false
     default: ${{ github.token }}
   extension:
-    description: "Extensao da fabrica. Hoje: block-breaker."
+    description: "Peca da fabrica: block-breaker ou pac-man. Rode a Action duas vezes (um step por jogo) para publicar os dois no README."
     required: false
     default: "block-breaker"
   out_dir:
@@ -30,16 +30,16 @@ inputs:
     required: false
     default: ""
   theme:
-    description: "Tema visual. Basicos: roxo (default), cinza, branco, azul, vermelho, rosa, ciano, verde. Games: minecraft."
+    description: "Tema visual. Basicos: roxo (default do Block Breaker), cinza, branco, azul, vermelho, rosa, ciano, verde. Games: minecraft, pacman (oficial do Pac-Man)."
     required: false
     default: "roxo"
 
 outputs:
   svg_path:
-    description: "SVG autoplay (intro + pipeline jogando sozinha) para o README."
+    description: "SVG autoplay para o README (Block Breaker ou Pac-Man, conforme a extensao)."
     value: ${{ steps.generate.outputs.svg_path }}
   html_path:
-    description: "HTML jogavel. Clique para focar e use setas ou A/D."
+    description: "HTML jogavel. Clique para focar. Block Breaker: A/D ou setas. Pac-Man: WASD ou setas."
     value: ${{ steps.generate.outputs.html_path }}
 
 runs:

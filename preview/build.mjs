@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { loadCalendar } from "../src/github/contributions.js";
-import { renderExtension } from "../src/factory.js";
+import { listExtensions, renderExtension } from "../src/factory.js";
 import { THEMES } from "../src/theme/index.js";
 
 const calendar = await loadCalendar({
@@ -10,26 +10,34 @@ const calendar = await loadCalendar({
 });
 
 await mkdir(new URL(".", import.meta.url), { recursive: true });
+await mkdir(new URL("./pac-man", import.meta.url), { recursive: true });
 
 const themes = Object.values(THEMES);
+const games = listExtensions();
+
 for (const theme of themes) {
-  const rendered = renderExtension("block-breaker", calendar, { theme: theme.id });
-  await writeFile(new URL(`./${theme.id}.html`, import.meta.url), rendered.artifacts.html);
-  await writeFile(new URL(`./${theme.id}.svg`, import.meta.url), rendered.artifacts.svg);
+  const block = renderExtension("block-breaker", calendar, { theme: theme.id });
+  await writeFile(new URL(`./${theme.id}.html`, import.meta.url), block.artifacts.html);
+  await writeFile(new URL(`./${theme.id}.svg`, import.meta.url), block.artifacts.svg);
+  const pac = renderExtension("pac-man", calendar, { theme: theme.id });
+  await writeFile(new URL(`./pac-man/${theme.id}.html`, import.meta.url), pac.artifacts.html);
+  await writeFile(new URL(`./pac-man/${theme.id}.svg`, import.meta.url), pac.artifacts.svg);
   console.log(theme.id);
 }
 
-const cards = themes
-  .map(
-    (theme) => `<a class="card" href="./${theme.id}.html" target="_blank" rel="noreferrer">
-  <img src="./${theme.id}.svg" alt="Block Breaker tema ${theme.name}"/>
+function cards(game, prefix) {
+  return themes
+    .map(
+      (theme) => `<a class="card" href="${prefix}${theme.id}.html" target="_blank" rel="noreferrer">
+  <img src="${prefix}${theme.id}.svg" alt="${game} tema ${theme.name}"/>
   <div>
     <strong>${theme.name}</strong>
-    <span>${theme.group} · ${theme.id}</span>
+    <span>${theme.group} · ${theme.id}${theme.id === "pacman" && game === "Pac-Man" ? " · oficial" : ""}</span>
   </div>
 </a>`,
-  )
-  .join("\n");
+    )
+    .join("\n");
+}
 
 const index = `<!doctype html>
 <html lang="pt-BR">
@@ -47,10 +55,11 @@ const index = `<!doctype html>
       color: #fafafa;
     }
     h1 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }
+    h2 { font-size: 15px; margin: 28px 0 8px; }
     p { color: #a1a1aa; margin: 0 0 20px; font-size: 13px; }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
       gap: 16px;
     }
     .card {
@@ -69,10 +78,16 @@ const index = `<!doctype html>
   </style>
 </head>
 <body>
-  <h1>Temas do Block Breaker</h1>
-  <p>Clique em um card para jogar aquele tema. Sem foco o automatico roda; clique no palco para controlar.</p>
+  <h1>Commit Breaker</h1>
+  <p>Dois jogos, os mesmos temas. Sem foco o automatico roda; clique no palco para controlar. Jogos: ${games.join(", ")}.</p>
+  <h2>Block Breaker</h2>
   <div class="grid">
-${cards}
+${cards("Block Breaker", "./")}
+  </div>
+  <h2>Pac-Man</h2>
+  <p>O calendario e o mapa. Pac-Man anda nos dias vazios e come os commits. 4 Bugs, 5 vidas, 10 dias especiais. Tema oficial: pacman.</p>
+  <div class="grid">
+${cards("Pac-Man", "./pac-man/")}
   </div>
 </body>
 </html>

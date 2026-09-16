@@ -11,6 +11,7 @@ on:
     paths:
       - "src/**"
       - "action.yml"
+      - "preview/build.mjs"
       - ".github/workflows/generate.yml"
 
 jobs:
@@ -27,18 +28,31 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           extension: block-breaker
           out_dir: dist
+          # Jogos: block-breaker, pac-man
           # Temas:
           #   Basicos: roxo (default), cinza, branco, azul, vermelho, rosa, ciano, verde
-          #   Games:   minecraft
+          #   Games:   minecraft, pacman (oficial do Pac-Man)
           theme: roxo
+      - name: Generate Pac-Man
+        uses: ./
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          extension: pac-man
+          out_dir: dist
+          theme: pacman
+      - name: Generate preview gallery
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node preview/build.mjs
       - name: Commit generated files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist
+          git add dist preview
           if git diff --cached --quiet; then
             echo "Sem mudanca visual"
             exit 0
           fi
-          git commit -m "chore: regenera o Block Breaker dos commits anuais"
+          git commit -m "chore: regenera os jogos dos commits anuais"
           git push

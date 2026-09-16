@@ -13,10 +13,12 @@
  *
  * Games:
  *   minecraft
+ *   pacman (oficial do Pac-Man)
  */
 export const THEME = "roxo";
 
 function pack(partial) {
+  const levels = partial.levels || [];
   return {
     skin: "arcade",
     group: "basicos",
@@ -25,6 +27,13 @@ function pack(partial) {
     ball: "#ffffff",
     page: partial.background,
     lifeEmpty: "#3f3f46",
+    maze: partial.frame,
+    player: partial.paddleEdge,
+    pellet: partial.hudMuted,
+    power: partial.dropMulti || "#fbbf24",
+    bugs: [levels[4], levels[3], levels[2], levels[1]].filter(Boolean),
+    scared: "#1d4ed8",
+    scaredFlash: "#f8fafc",
     ...partial,
   };
 }
@@ -182,6 +191,34 @@ export const THEMES = {
     brickHi: "#c4a574",
     brickLo: "#3e2a14",
   }),
+  pacman: pack({
+    id: "pacman",
+    name: "Pac-Man",
+    group: "games",
+    skin: "pacman",
+    background: "#000000",
+    court: "#000000",
+    frame: "#2121de",
+    maze: "#2121de",
+    paddle: "#ffff00",
+    paddleEdge: "#ffff00",
+    ball: "#ffff00",
+    ballGlow: "#ffff88",
+    player: "#ffff00",
+    pellet: "#ffb8ae",
+    power: "#ffffff",
+    hud: "#ffffff",
+    hudMuted: "#ffb8ae",
+    life: "#ffff00",
+    dropMulti: "#ffb8ae",
+    dropWide: "#00ffff",
+    bugs: ["#ff0000", "#ffb8ff", "#00ffff", "#ffb852"],
+    scared: "#2121de",
+    scaredFlash: "#ffffff",
+    levels: ["#000000", "#2121de", "#ffb852", "#ff0000", "#ffff00"],
+    brickHi: "#ffff00",
+    brickLo: "#2121de",
+  }),
 };
 
 const ALIASES = {
@@ -194,6 +231,7 @@ const ALIASES = {
   pink: "rosa",
   cyan: "ciano",
   green: "verde",
+  "pac-man": "pacman",
   default: "roxo",
 };
 

@@ -19,16 +19,26 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Generate Block Breaker
-        uses: Michel1412/commit-craft@v1
+        uses: Michel1412/commit-craft@v2
         with:
           github_user_name: ${{ github.repository_owner }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           extension: block-breaker
           out_dir: dist
+          # Jogos: block-breaker, pac-man
           # Temas:
           #   Basicos: roxo (default), cinza, branco, azul, vermelho, rosa, ciano, verde
-          #   Games:   minecraft
+          #   Games:   minecraft, pacman (oficial do Pac-Man)
           theme: roxo
+
+      - name: Generate Pac-Man
+        uses: Michel1412/commit-craft@v2
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          extension: pac-man
+          out_dir: dist
+          theme: pacman
 
       - name: Commit generated files
         run: |
@@ -39,5 +49,5 @@ jobs:
             echo "Sem mudanca visual"
             exit 0
           fi
-          git commit -m "chore: regenera o Block Breaker dos commits anuais"
+          git commit -m "chore: regenera os jogos dos commits anuais"
           git push
