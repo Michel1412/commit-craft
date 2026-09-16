@@ -1,5 +1,4 @@
-import { END_THEME } from "../../theme/end.js";
-import { SPRITES } from "../../sprites.js";
+import { resolveTheme } from "../../theme/index.js";
 import { CONFIG, simulate } from "./engine.js";
 import { renderSvg } from "./svg.js";
 import { renderHtml } from "./html.js";
@@ -13,16 +12,15 @@ export const BLOCK_BREAKER = {
   },
 };
 
-export function renderBlockBreaker(calendar) {
+export function renderBlockBreaker(calendar, options = {}) {
+  const theme = resolveTheme(options.theme);
   const sim = simulate(calendar);
-  sim.theme = END_THEME;
-  sim.sprites = SPRITES;
+  sim.theme = theme;
   return {
     svg: renderSvg(sim),
     html: renderHtml({
       calendar,
-      theme: END_THEME,
-      sprites: SPRITES,
+      theme,
       config: CONFIG,
     }),
   };

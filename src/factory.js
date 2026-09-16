@@ -7,7 +7,7 @@ export const EXTENSIONS = {
   },
 };
 
-export function renderExtension(id, calendar) {
+export function renderExtension(id, calendar, options = {}) {
   const extension = EXTENSIONS[id];
   if (!extension) {
     const known = Object.keys(EXTENSIONS).join(", ");
@@ -16,6 +16,6 @@ export function renderExtension(id, calendar) {
   return {
     id: extension.id,
     files: extension.files,
-    artifacts: extension.render(calendar),
+    artifacts: extension.render(calendar, options),
   };
 }

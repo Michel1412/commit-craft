@@ -3,6 +3,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { loadCalendar } from "./github/contributions.js";
 import { renderExtension } from "./factory.js";
+import { THEME, resolveTheme, listThemes } from "./theme/index.js";
 
 function parseArgs(argv) {
   const out = {};
@@ -45,6 +46,8 @@ async function main() {
   const outDir = args.out || env("INPUT_OUT_DIR", "dist");
   const source = args.source || env("INPUT_SOURCE", "user");
   const repository = args.repository || env("INPUT_REPOSITORY") || env("GITHUB_REPOSITORY");
+  const themeName = args.theme || env("INPUT_THEME") || THEME;
+  const theme = resolveTheme(themeName);
 
   if (!login) {
     throw new Error("Passe --user LOGIN ou o input github_user_name da Action.");
@@ -52,7 +55,7 @@ async function main() {
   assertSafeOutDir(outDir);
 
   const calendar = await loadCalendar({ login, token, source, repository });
-  const rendered = renderExtension(extension, calendar);
+  const rendered = renderExtension(extension, calendar, { theme: theme.id });
   const dest = path.resolve(process.cwd(), outDir);
   await mkdir(dest, { recursive: true });
 
@@ -62,14 +65,14 @@ async function main() {
   await writeFile(path.join(dest, htmlName), rendered.artifacts.html, "utf8");
 
   const snippet = [
-    `<!-- Commit Craft · ${rendered.id} -->`,
+    `<!-- Commit Breaker · ${rendered.id} -->`,
     `<p align="center">`,
     `  <a href="./${htmlName}">`,
     `    <img src="./${svgName}" alt="Block Breaker dos commits anuais de ${login}" />`,
     `  </a>`,
     `</p>`,
     ``,
-    `_A pipeline joga sozinha no README. Clique na imagem para abrir o HTML e controlar com A/D ou setas._`,
+    `_No README a plataforma joga sozinha. No HTML, sem foco ela continua no automatico; clique para jogar na hora._`,
     ``,
   ].join("\n");
   await writeFile(path.join(dest, "README.embed.md"), snippet, "utf8");
@@ -78,7 +81,8 @@ async function main() {
   await setOutput("html_path", `${outDir}/${htmlName}`.replaceAll("\\\\", "/"));
 
   const note = calendar.warning ? ` aviso=${calendar.warning}` : "";
-  console.log(`Gerado ${extension} para ${calendar.login} (${calendar.total} commits, fonte=${calendar.source})${note}`);
+  console.log(`Gerado ${extension} tema=${theme.id} para ${calendar.login} (${calendar.total} commits, fonte=${calendar.source})${note}`);
+  console.log(`Temas: ${listThemes().join(", ")}`);
   console.log(`SVG  ${path.join(dest, svgName)}`);
   console.log(`HTML ${path.join(dest, htmlName)}`);
 }

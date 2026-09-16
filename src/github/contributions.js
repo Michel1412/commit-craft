@@ -33,7 +33,7 @@ function mulberry32(seed) {
 }
 
 export function syntheticCalendar(login) {
-  const rand = mulberry32(hashString(login || "commit-craft"));
+  const rand = mulberry32(hashString(login || "commit-breaker"));
   const today = new Date();
   const start = new Date(today);
   start.setUTCDate(start.getUTCDate() - 365);
@@ -73,7 +73,7 @@ function asWeeksFromDays(days) {
 async function githubFetch(url, token, body) {
   const headers = {
     Accept: "application/vnd.github+json",
-    "User-Agent": "commit-craft",
+    "User-Agent": "commit-breaker",
   };
   if (token) headers.Authorization = `Bearer ${token}`;
   if (body) headers["Content-Type"] = "application/json";

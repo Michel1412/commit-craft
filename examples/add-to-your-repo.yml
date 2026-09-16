@@ -1,7 +1,7 @@
-# Copie este arquivo para .github/workflows/commit-craft.yml
-# no repositorio cujo README deve ganhar o Block Breaker.
+# Copie este arquivo para .github/workflows/commit-breaker.yml
+# no repositorio cujo README deve ganhar o Commit Breaker.
 
-name: commit-craft
+name: commit-breaker
 
 on:
   schedule:
@@ -25,6 +25,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           extension: block-breaker
           out_dir: dist
+          # Temas:
+          #   Basicos: roxo (default), cinza, branco, azul, vermelho, rosa, ciano, verde
+          #   Games:   minecraft
+          theme: roxo
 
       - name: Commit generated files
         run: |

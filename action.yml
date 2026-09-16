@@ -1,6 +1,6 @@
-name: "Commit Craft"
-description: "Fabrica de extensoes GitHub Actions. Gera o Block Breaker dos commits anuais para colar no README."
-author: "Commit Craft"
+name: "Commit Breaker"
+description: "Commit Breaker: gera o Block Breaker dos commits anuais para colar no README."
+author: "Michel Bocchi Junior"
 branding:
   icon: box
   color: purple
@@ -29,6 +29,10 @@ inputs:
     description: "owner/name quando source=repo. Vazio usa o repositorio da Action."
     required: false
     default: ""
+  theme:
+    description: "Tema visual. Basicos: roxo (default), cinza, branco, azul, vermelho, rosa, ciano, verde. Games: minecraft."
+    required: false
+    default: "roxo"
 
 outputs:
   svg_path:
@@ -50,5 +54,6 @@ runs:
         INPUT_OUT_DIR: ${{ inputs.out_dir }}
         INPUT_SOURCE: ${{ inputs.source }}
         INPUT_REPOSITORY: ${{ inputs.repository }}
-        COMMIT_CRAFT_ACTION_PATH: ${{ github.action_path }}
-      run: node "$COMMIT_CRAFT_ACTION_PATH/src/cli.js"
+        INPUT_THEME: ${{ inputs.theme }}
+        COMMIT_BREAKER_ACTION_PATH: ${{ github.action_path }}
+      run: node "$COMMIT_BREAKER_ACTION_PATH/src/cli.js"
