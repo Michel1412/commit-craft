@@ -1,0 +1,24 @@
+{
+  "name": "commit-craft",
+  "version": "1.0.0",
+  "description": "Fabrica de extensoes GitHub Actions. Gera o Block Breaker dos commits anuais para o README.",
+  "type": "module",
+  "bin": {
+    "commit-craft": "./src/cli.js"
+  },
+  "scripts": {
+    "generate": "node src/cli.js",
+    "preview": "node src/cli.js --preview"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "keywords": [
+    "github-actions",
+    "readme",
+    "contribution-graph",
+    "block-breaker",
+    "svg"
+  ]
+}

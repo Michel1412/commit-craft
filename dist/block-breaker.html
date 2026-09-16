@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Commit Craft · Block Breaker · Michel1412</title>
+  <style>
+    :root { color-scheme: dark; }
+    html, body { margin: 0; height: 100%; background: #07040f; }
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #f3e8ff;
+    }
+    .stage {
+      position: relative;
+      outline: none;
+      border-radius: 12px;
+      box-shadow: 0 0 0 1px #3b0764, 0 24px 80px #d946ef33;
+    }
+    .stage:focus { box-shadow: 0 0 0 2px #22d3ee, 0 24px 80px #22d3ee33; }
+    canvas { display: block; border-radius: 12px; cursor: pointer; }
+    .hint {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #10081ccc;
+      color: #e9d5ff;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+    }
+    .hint strong { color: #22d3ee; }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage" tabindex="0" aria-label="Block Breaker dos commits. Clique para focar e usar A D ou setas.">
+    <canvas id="game"></canvas>
+    <div class="hint" id="hint">Pipeline no automatico. <strong>Clique para focar</strong> e use <strong>A / D</strong> ou <strong>← →</strong>.</div>
+  </div>
+  <script type="application/json" id="data">{"calendar":{"login":"Michel1412","source":"user","total":134,"weeks":[{"days":[{"date":"2025-09-14","count":0,"level":0},{"date":"2025-09-15","count":0,"level":0},{"date":"2025-09-16","count":0,"level":0},{"date":"2025-09-17","count":0,"level":0},{"date":"2025-09-18","count":0,"level":0},{"date":"2025-09-19","count":0,"level":0},{"date":"2025-09-20","count":0,"level":0}]},{"days":[{"date":"2025-09-21","count":7,"level":4},{"date":"2025-09-22","count":0,"level":0},{"date":"2025-09-23","count":0,"level":0},{"date":"2025-09-24","count":0,"level":0},{"date":"2025-09-25","count":0,"level":0},{"date":"2025-09-26","count":0,"level":0},{"date":"2025-09-27","count":0,"level":0}]},{"days":[{"date":"2025-09-28","count":0,"level":0},{"date":"2025-09-29","count":0,"level":0},{"date":"2025-09-30","count":0,"level":0},{"date":"2025-10-01","count":0,"level":0},{"date":"2025-10-02","count":0,"level":0},{"date":"2025-10-03","count":0,"level":0},{"date":"2025-10-04","count":0,"level":0}]},{"days":[{"date":"2025-10-05","count":0,"level":0},{"date":"2025-10-06","count":0,"level":0},{"date":"2025-10-07","count":0,"level":0},{"date":"2025-10-08","count":0,"level":0},{"date":"2025-10-09","count":0,"level":0},{"date":"2025-10-10","count":0,"level":0},{"date":"2025-10-11","count":0,"level":0}]},{"days":[{"date":"2025-10-12","count":0,"level":0},{"date":"2025-10-13","count":0,"level":0},{"date":"2025-10-14","count":2,"level":1},{"date":"2025-10-15","count":3,"level":2},{"date":"2025-10-16","count":0,"level":0},{"date":"2025-10-17","count":0,"level":0},{"date":"2025-10-18","count":0,"level":0}]},{"days":[{"date":"2025-10-19","count":0,"level":0},{"date":"2025-10-20","count":0,"level":0},{"date":"2025-10-21","count":0,"level":0},{"date":"2025-10-22","count":0,"level":0},{"date":"2025-10-23","count":7,"level":4},{"date":"2025-10-24","count":1,"level":1},{"date":"2025-10-25","count":0,"level":0}]},{"days":[{"date":"2025-10-26","count":0,"level":0},{"date":"2025-10-27","count":0,"level":0},{"date":"2025-10-28","count":0,"level":0},{"date":"2025-10-29","count":7,"level":4},{"date":"2025-10-30","count":0,"level":0},{"date":"2025-10-31","count":0,"level":0},{"date":"2025-11-01","count":0,"level":0}]},{"days":[{"date":"2025-11-02","count":0,"level":0},{"date":"2025-11-03","count":0,"level":0},{"date":"2025-11-04","count":3,"level":2},{"date":"2025-11-05","count":0,"level":0},{"date":"2025-11-06","count":0,"level":0},{"date":"2025-11-07","count":0,"level":0},{"date":"2025-11-08","count":0,"level":0}]},{"days":[{"date":"2025-11-09","count":0,"level":0},{"date":"2025-11-10","count":0,"level":0},{"date":"2025-11-11","count":0,"level":0},{"date":"2025-11-12","count":1,"level":1},{"date":"2025-11-13","count":0,"level":0},{"date":"2025-11-14","count":0,"level":0},{"date":"2025-11-15","count":0,"level":0}]},{"days":[{"date":"2025-11-16","count":0,"level":0},{"date":"2025-11-17","count":1,"level":1},{"date":"2025-11-18","count":0,"level":0},{"date":"2025-11-19","count":0,"level":0},{"date":"2025-11-20","count":0,"level":0},{"date":"2025-11-21","count":0,"level":0},{"date":"2025-11-22","count":0,"level":0}]},{"days":[{"date":"2025-11-23","count":0,"level":0},{"date":"2025-11-24","count":0,"level":0},{"date":"2025-11-25","count":0,"level":0},{"date":"2025-11-26","count":0,"level":0},{"date":"2025-11-27","count":0,"level":0},{"date":"2025-11-28","count":0,"level":0},{"date":"2025-11-29","count":0,"level":0}]},{"days":[{"date":"2025-11-30","count":0,"level":0},{"date":"2025-12-01","count":0,"level":0},{"date":"2025-12-02","count":0,"level":0},{"date":"2025-12-03","count":0,"level":0},{"date":"2025-12-04","count":0,"level":0},{"date":"2025-12-05","count":0,"level":0},{"date":"2025-12-06","count":0,"level":0}]},{"days":[{"date":"2025-12-07","count":0,"level":0},{"date":"2025-12-08","count":0,"level":0},{"date":"2025-12-09","count":0,"level":0},{"date":"2025-12-10","count":0,"level":0},{"date":"2025-12-11","count":0,"level":0},{"date":"2025-12-12","count":0,"level":0},{"date":"2025-12-13","count":0,"level":0}]},{"days":[{"date":"2025-12-14","count":0,"level":0},{"date":"2025-12-15","count":0,"level":0},{"date":"2025-12-16","count":0,"level":0},{"date":"2025-12-17","count":0,"level":0},{"date":"2025-12-18","count":0,"level":0},{"date":"2025-12-19","count":0,"level":0},{"date":"2025-12-20","count":0,"level":0}]},{"days":[{"date":"2025-12-21","count":0,"level":0},{"date":"2025-12-22","count":0,"level":0},{"date":"2025-12-23","count":0,"level":0},{"date":"2025-12-24","count":0,"level":0},{"date":"2025-12-25","count":0,"level":0},{"date":"2025-12-26","count":0,"level":0},{"date":"2025-12-27","count":0,"level":0}]},{"days":[{"date":"2025-12-28","count":0,"level":0},{"date":"2025-12-29","count":0,"level":0},{"date":"2025-12-30","count":0,"level":0},{"date":"2025-12-31","count":0,"level":0},{"date":"2026-01-01","count":0,"level":0},{"date":"2026-01-02","count":0,"level":0},{"date":"2026-01-03","count":0,"level":0}]},{"days":[{"date":"2026-01-04","count":0,"level":0},{"date":"2026-01-05","count":0,"level":0},{"date":"2026-01-06","count":0,"level":0},{"date":"2026-01-07","count":0,"level":0},{"date":"2026-01-08","count":0,"level":0},{"date":"2026-01-09","count":0,"level":0},{"date":"2026-01-10","count":0,"level":0}]},{"days":[{"date":"2026-01-11","count":0,"level":0},{"date":"2026-01-12","count":0,"level":0},{"date":"2026-01-13","count":0,"level":0},{"date":"2026-01-14","count":0,"level":0},{"date":"2026-01-15","count":0,"level":0},{"date":"2026-01-16","count":0,"level":0},{"date":"2026-01-17","count":0,"level":0}]},{"days":[{"date":"2026-01-18","count":0,"level":0},{"date":"2026-01-19","count":0,"level":0},{"date":"2026-01-20","count":0,"level":0},{"date":"2026-01-21","count":0,"level":0},{"date":"2026-01-22","count":0,"level":0},{"date":"2026-01-23","count":0,"level":0},{"date":"2026-01-24","count":0,"level":0}]},{"days":[{"date":"2026-01-25","count":0,"level":0},{"date":"2026-01-26","count":0,"level":0},{"date":"2026-01-27","count":0,"level":0},{"date":"2026-01-28","count":0,"level":0},{"date":"2026-01-29","count":0,"level":0},{"date":"2026-01-30","count":0,"level":0},{"date":"2026-01-31","count":0,"level":0}]},{"days":[{"date":"2026-02-01","count":0,"level":0},{"date":"2026-02-02","count":0,"level":0},{"date":"2026-02-03","count":0,"level":0},{"date":"2026-02-04","count":0,"level":0},{"date":"2026-02-05","count":0,"level":0},{"date":"2026-02-06","count":0,"level":0},{"date":"2026-02-07","count":0,"level":0}]},{"days":[{"date":"2026-02-08","count":0,"level":0},{"date":"2026-02-09","count":0,"level":0},{"date":"2026-02-10","count":0,"level":0},{"date":"2026-02-11","count":0,"level":0},{"date":"2026-02-12","count":0,"level":0},{"date":"2026-02-13","count":0,"level":0},{"date":"2026-02-14","count":0,"level":0}]},{"days":[{"date":"2026-02-15","count":0,"level":0},{"date":"2026-02-16","count":0,"level":0},{"date":"2026-02-17","count":0,"level":0},{"date":"2026-02-18","count":0,"level":0},{"date":"2026-02-19","count":0,"level":0},{"date":"2026-02-20","count":0,"level":0},{"date":"2026-02-21","count":0,"level":0}]},{"days":[{"date":"2026-02-22","count":0,"level":0},{"date":"2026-02-23","count":0,"level":0},{"date":"2026-02-24","count":1,"level":1},{"date":"2026-02-25","count":3,"level":2},{"date":"2026-02-26","count":0,"level":0},{"date":"2026-02-27","count":0,"level":0},{"date":"2026-02-28","count":0,"level":0}]},{"days":[{"date":"2026-03-01","count":0,"level":0},{"date":"2026-03-02","count":0,"level":0},{"date":"2026-03-03","count":1,"level":1},{"date":"2026-03-04","count":1,"level":1},{"date":"2026-03-05","count":0,"level":0},{"date":"2026-03-06","count":0,"level":0},{"date":"2026-03-07","count":0,"level":0}]},{"days":[{"date":"2026-03-08","count":0,"level":0},{"date":"2026-03-09","count":0,"level":0},{"date":"2026-03-10","count":0,"level":0},{"date":"2026-03-11","count":0,"level":0},{"date":"2026-03-12","count":0,"level":0},{"date":"2026-03-13","count":0,"level":0},{"date":"2026-03-14","count":0,"level":0}]},{"days":[{"date":"2026-03-15","count":0,"level":0},{"date":"2026-03-16","count":0,"level":0},{"date":"2026-03-17","count":0,"level":0},{"date":"2026-03-18","count":0,"level":0},{"date":"2026-03-19","count":0,"level":0},{"date":"2026-03-20","count":0,"level":0},{"date":"2026-03-21","count":0,"level":0}]},{"days":[{"date":"2026-03-22","count":0,"level":0},{"date":"2026-03-23","count":0,"level":0},{"date":"2026-03-24","count":0,"level":0},{"date":"2026-03-25","count":0,"level":0},{"date":"2026-03-26","count":0,"level":0},{"date":"2026-03-27","count":0,"level":0},{"date":"2026-03-28","count":0,"level":0}]},{"days":[{"date":"2026-03-29","count":0,"level":0},{"date":"2026-03-30","count":0,"level":0},{"date":"2026-03-31","count":1,"level":1},{"date":"2026-04-01","count":2,"level":1},{"date":"2026-04-02","count":0,"level":0},{"date":"2026-04-03","count":5,"level":3},{"date":"2026-04-04","count":0,"level":0}]},{"days":[{"date":"2026-04-05","count":1,"level":1},{"date":"2026-04-06","count":0,"level":0},{"date":"2026-04-07","count":0,"level":0},{"date":"2026-04-08","count":0,"level":0},{"date":"2026-04-09","count":0,"level":0},{"date":"2026-04-10","count":0,"level":0},{"date":"2026-04-11","count":0,"level":0}]},{"days":[{"date":"2026-04-12","count":6,"level":3},{"date":"2026-04-13","count":0,"level":0},{"date":"2026-04-14","count":0,"level":0},{"date":"2026-04-15","count":0,"level":0},{"date":"2026-04-16","count":0,"level":0},{"date":"2026-04-17","count":0,"level":0},{"date":"2026-04-18","count":0,"level":0}]},{"days":[{"date":"2026-04-19","count":0,"level":0},{"date":"2026-04-20","count":0,"level":0},{"date":"2026-04-21","count":0,"level":0},{"date":"2026-04-22","count":0,"level":0},{"date":"2026-04-23","count":0,"level":0},{"date":"2026-04-24","count":0,"level":0},{"date":"2026-04-25","count":0,"level":0}]},{"days":[{"date":"2026-04-26","count":0,"level":0},{"date":"2026-04-27","count":0,"level":0},{"date":"2026-04-28","count":0,"level":0},{"date":"2026-04-29","count":0,"level":0},{"date":"2026-04-30","count":0,"level":0},{"date":"2026-05-01","count":0,"level":0},{"date":"2026-05-02","count":0,"level":0}]},{"days":[{"date":"2026-05-03","count":0,"level":0},{"date":"2026-05-04","count":0,"level":0},{"date":"2026-05-05","count":0,"level":0},{"date":"2026-05-06","count":4,"level":2},{"date":"2026-05-07","count":0,"level":0},{"date":"2026-05-08","count":0,"level":0},{"date":"2026-05-09","count":0,"level":0}]},{"days":[{"date":"2026-05-10","count":0,"level":0},{"date":"2026-05-11","count":0,"level":0},{"date":"2026-05-12","count":0,"level":0},{"date":"2026-05-13","count":0,"level":0},{"date":"2026-05-14","count":0,"level":0},{"date":"2026-05-15","count":0,"level":0},{"date":"2026-05-16","count":0,"level":0}]},{"days":[{"date":"2026-05-17","count":0,"level":0},{"date":"2026-05-18","count":0,"level":0},{"date":"2026-05-19","count":0,"level":0},{"date":"2026-05-20","count":0,"level":0},{"date":"2026-05-21","count":0,"level":0},{"date":"2026-05-22","count":0,"level":0},{"date":"2026-05-23","count":1,"level":1}]},{"days":[{"date":"2026-05-24","count":1,"level":1},{"date":"2026-05-25","count":2,"level":1},{"date":"2026-05-26","count":1,"level":1},{"date":"2026-05-27","count":2,"level":1},{"date":"2026-05-28","count":0,"level":0},{"date":"2026-05-29","count":0,"level":0},{"date":"2026-05-30","count":0,"level":0}]},{"days":[{"date":"2026-05-31","count":0,"level":0},{"date":"2026-06-01","count":5,"level":3},{"date":"2026-06-02","count":8,"level":4},{"date":"2026-06-03","count":1,"level":1},{"date":"2026-06-04","count":5,"level":3},{"date":"2026-06-05","count":0,"level":0},{"date":"2026-06-06","count":0,"level":0}]},{"days":[{"date":"2026-06-07","count":0,"level":0},{"date":"2026-06-08","count":3,"level":2},{"date":"2026-06-09","count":0,"level":0},{"date":"2026-06-10","count":0,"level":0},{"date":"2026-06-11","count":0,"level":0},{"date":"2026-06-12","count":2,"level":1},{"date":"2026-06-13","count":4,"level":2}]},{"days":[{"date":"2026-06-14","count":3,"level":2},{"date":"2026-06-15","count":0,"level":0},{"date":"2026-06-16","count":2,"level":1},{"date":"2026-06-17","count":1,"level":1},{"date":"2026-06-18","count":0,"level":0},{"date":"2026-06-19","count":7,"level":4},{"date":"2026-06-20","count":0,"level":0}]},{"days":[{"date":"2026-06-21","count":1,"level":1},{"date":"2026-06-22","count":0,"level":0},{"date":"2026-06-23","count":5,"level":3},{"date":"2026-06-24","count":9,"level":4},{"date":"2026-06-25","count":5,"level":3},{"date":"2026-06-26","count":0,"level":0},{"date":"2026-06-27","count":0,"level":0}]},{"days":[{"date":"2026-06-28","count":0,"level":0},{"date":"2026-06-29","count":0,"level":0},{"date":"2026-06-30","count":0,"level":0},{"date":"2026-07-01","count":0,"level":0},{"date":"2026-07-02","count":3,"level":2},{"date":"2026-07-03","count":0,"level":0},{"date":"2026-07-04","count":0,"level":0}]},{"days":[{"date":"2026-07-05","count":0,"level":0},{"date":"2026-07-06","count":0,"level":0},{"date":"2026-07-07","count":1,"level":1},{"date":"2026-07-08","count":0,"level":0},{"date":"2026-07-09","count":0,"level":0},{"date":"2026-07-10","count":0,"level":0},{"date":"2026-07-11","count":0,"level":0}]},{"days":[{"date":"2026-07-12","count":0,"level":0},{"date":"2026-07-13","count":0,"level":0},{"date":"2026-07-14","count":0,"level":0},{"date":"2026-07-15","count":0,"level":0},{"date":"2026-07-16","count":0,"level":0},{"date":"2026-07-17","count":0,"level":0},{"date":"2026-07-18","count":0,"level":0}]},{"days":[{"date":"2026-07-19","count":0,"level":0},{"date":"2026-07-20","count":0,"level":0},{"date":"2026-07-21","count":0,"level":0},{"date":"2026-07-22","count":0,"level":0},{"date":"2026-07-23","count":0,"level":0},{"date":"2026-07-24","count":0,"level":0},{"date":"2026-07-25","count":0,"level":0}]},{"days":[{"date":"2026-07-26","count":0,"level":0},{"date":"2026-07-27","count":0,"level":0},{"date":"2026-07-28","count":0,"level":0},{"date":"2026-07-29","count":0,"level":0},{"date":"2026-07-30","count":0,"level":0},{"date":"2026-07-31","count":0,"level":0},{"date":"2026-08-01","count":0,"level":0}]},{"days":[{"date":"2026-08-02","count":0,"level":0},{"date":"2026-08-03","count":0,"level":0},{"date":"2026-08-04","count":0,"level":0},{"date":"2026-08-05","count":0,"level":0},{"date":"2026-08-06","count":0,"level":0},{"date":"2026-08-07","count":0,"level":0},{"date":"2026-08-08","count":0,"level":0}]},{"days":[{"date":"2026-08-09","count":0,"level":0},{"date":"2026-08-10","count":0,"level":0},{"date":"2026-08-11","count":0,"level":0},{"date":"2026-08-12","count":0,"level":0},{"date":"2026-08-13","count":0,"level":0},{"date":"2026-08-14","count":0,"level":0},{"date":"2026-08-15","count":0,"level":0}]},{"days":[{"date":"2026-08-16","count":0,"level":0},{"date":"2026-08-17","count":2,"level":1},{"date":"2026-08-18","count":0,"level":0},{"date":"2026-08-19","count":1,"level":1},{"date":"2026-08-20","count":0,"level":0},{"date":"2026-08-21","count":0,"level":0},{"date":"2026-08-22","count":0,"level":0}]},{"days":[{"date":"2026-08-23","count":1,"level":1},{"date":"2026-08-24","count":0,"level":0},{"date":"2026-08-25","count":0,"level":0},{"date":"2026-08-26","count":0,"level":0},{"date":"2026-08-27","count":0,"level":0},{"date":"2026-08-28","count":0,"level":0},{"date":"2026-08-29","count":0,"level":0}]},{"days":[{"date":"2026-08-30","count":0,"level":0},{"date":"2026-08-31","count":0,"level":0},{"date":"2026-09-01","count":0,"level":0},{"date":"2026-09-02","count":1,"level":1},{"date":"2026-09-03","count":0,"level":0},{"date":"2026-09-04","count":0,"level":0},{"date":"2026-09-05","count":0,"level":0}]},{"days":[{"date":"2026-09-06","count":0,"level":0},{"date":"2026-09-07","count":0,"level":0},{"date":"2026-09-08","count":0,"level":0},{"date":"2026-09-09","count":0,"level":0},{"date":"2026-09-10","count":0,"level":0},{"date":"2026-09-11","count":0,"level":0},{"date":"2026-09-12","count":0,"level":0}]},{"days":[{"date":"2026-09-13","count":0,"level":0},{"date":"2026-09-14","count":0,"level":0},{"date":"2026-09-15","count":0,"level":0}]}]},"theme":{"id":"end","background":"#07040f","voidDeep":"#10081c","island":"#2a2433","islandTop":"#3a3346","obsidian":"#1b1526","obsidianHi":"#32283f","endStone":"#c9bd8a","endStoneShadow":"#8c7f52","crystal":"#f5d0fe","crystalCore":"#e879f9","breath":"#d946ef","breathHot":"#f0abfc","breathDeep":"#6b21a8","portal":"#22c55e","portalGlow":"#86efac","pipeline":"#22d3ee","pipelineDark":"#0e7490","pipelineGlow":"#a5f3fc","ball":"#f5d0fe","ballCore":"#ffffff","hud":"#e9d5ff","hudMuted":"#a78bfa","text":"#f3e8ff","levels":["#2a1840","#4c1d6b","#7e22ce","#c084fc","#f0abfc"],"star":"#e9d5ff"},"sprites":{"miner":{"width":16,"height":20,"rects":[{"x":4,"y":0,"w":8,"h":1,"fill":"#2b1a12"},{"x":3,"y":1,"w":10,"h":1,"fill":"#2b1a12"},{"x":3,"y":2,"w":2,"h":1,"fill":"#2b1a12"},{"x":5,"y":2,"w":6,"h":1,"fill":"#e0ac7a"},{"x":11,"y":2,"w":2,"h":1,"fill":"#2b1a12"},{"x":3,"y":3,"w":1,"h":1,"fill":"#2b1a12"},{"x":4,"y":3,"w":8,"h":1,"fill":"#e0ac7a"},{"x":12,"y":3,"w":1,"h":1,"fill":"#2b1a12"},{"x":3,"y":4,"w":1,"h":1,"fill":"#2b1a12"},{"x":4,"y":4,"w":1,"h":1,"fill":"#e0ac7a"},{"x":5,"y":4,"w":1,"h":1,"fill":"#f8f4ea"},{"x":6,"y":4,"w":2,"h":1,"fill":"#2a1810"},{"x":8,"y":4,"w":1,"h":1,"fill":"#f8f4ea"},{"x":9,"y":4,"w":2,"h":1,"fill":"#e0ac7a"},{"x":11,"y":4,"w":1,"h":1,"fill":"#f8f4ea"},{"x":12,"y":4,"w":1,"h":1,"fill":"#2b1a12"},{"x":3,"y":5,"w":1,"h":1,"fill":"#2b1a12"},{"x":4,"y":5,"w":8,"h":1,"fill":"#e0ac7a"},{"x":12,"y":5,"w":1,"h":1,"fill":"#2b1a12"},{"x":3,"y":6,"w":1,"h":1,"fill":"#2b1a12"},{"x":4,"y":6,"w":2,"h":1,"fill":"#e0ac7a"},{"x":6,"y":6,"w":2,"h":1,"fill":"#c47a58"},{"x":8,"y":6,"w":1,"h":1,"fill":"#e0ac7a"},{"x":9,"y":6,"w":1,"h":1,"fill":"#f8f4ea"},{"x":10,"y":6,"w":2,"h":1,"fill":"#e0ac7a"},{"x":12,"y":6,"w":1,"h":1,"fill":"#2b1a12"},{"x":4,"y":7,"w":8,"h":1,"fill":"#e0ac7a"},{"x":6,"y":8,"w":4,"h":1,"fill":"#3b8ea5"},{"x":4,"y":9,"w":2,"h":1,"fill":"#d49a6a"},{"x":6,"y":9,"w":4,"h":1,"fill":"#3b8ea5"},{"x":10,"y":9,"w":2,"h":1,"fill":"#d49a6a"},{"x":3,"y":10,"w":3,"h":1,"fill":"#d49a6a"},{"x":6,"y":10,"w":5,"h":1,"fill":"#3b8ea5"},{"x":11,"y":10,"w":3,"h":1,"fill":"#d49a6a"},{"x":3,"y":11,"w":3,"h":1,"fill":"#d49a6a"},{"x":6,"y":11,"w":1,"h":1,"fill":"#2a6a7c"},{"x":7,"y":11,"w":4,"h":1,"fill":"#3b8ea5"},{"x":11,"y":11,"w":1,"h":1,"fill":"#2a6a7c"},{"x":12,"y":11,"w":2,"h":1,"fill":"#d49a6a"},{"x":3,"y":12,"w":3,"h":1,"fill":"#d49a6a"},{"x":7,"y":12,"w":2,"h":1,"fill":"#3b8ea5"},{"x":10,"y":12,"w":1,"h":1,"fill":"#3b8ea5"},{"x":12,"y":12,"w":2,"h":1,"fill":"#d49a6a"},{"x":4,"y":13,"w":2,"h":1,"fill":"#d49a6a"},{"x":10,"y":13,"w":2,"h":1,"fill":"#d49a6a"},{"x":6,"y":14,"w":4,"h":1,"fill":"#3d4c99"},{"x":6,"y":15,"w":1,"h":1,"fill":"#3d4c99"},{"x":7,"y":15,"w":2,"h":1,"fill":"#2a3470"},{"x":9,"y":15,"w":1,"h":1,"fill":"#3d4c99"},{"x":6,"y":16,"w":1,"h":1,"fill":"#2a3470"},{"x":9,"y":16,"w":1,"h":1,"fill":"#2a3470"},{"x":6,"y":17,"w":1,"h":1,"fill":"#2a3470"},{"x":9,"y":17,"w":1,"h":1,"fill":"#2a3470"},{"x":6,"y":18,"w":1,"h":1,"fill":"#4a3728"},{"x":9,"y":18,"w":1,"h":1,"fill":"#4a3728"},{"x":6,"y":19,"w":1,"h":1,"fill":"#4a3728"},{"x":9,"y":19,"w":1,"h":1,"fill":"#4a3728"}],"rows":["....hhhhhhhh....","...hhhhhhhhhh...","...hhsssssshh...","...hssssssssh...","...hseppesseh...","...hssssssssh...","...hssmmsessh...","....ssssssss....","......cccc......","....aaccccaa....","...aaacccccaaa..","...aaadccccdaa..","...aaa.cc.c.aa..","....aa....aa....","......bbbb......","......bnnb......","......n..n......","......n..n......","......o..o......","......o..o......"],"palette":{"h":"#2b1a12","s":"#e0ac7a","e":"#f8f4ea","p":"#2a1810","m":"#c47a58","c":"#3b8ea5","d":"#2a6a7c","b":"#3d4c99","n":"#2a3470","o":"#4a3728","a":"#d49a6a"}},"dragon":{"width":38,"height":15,"rects":[{"x":4,"y":0,"w":2,"h":1,"fill":"#a855f7"},{"x":22,"y":0,"w":1,"h":1,"fill":"#2e1065"},{"x":24,"y":0,"w":1,"h":1,"fill":"#2e1065"},{"x":3,"y":1,"w":1,"h":1,"fill":"#a855f7"},{"x":4,"y":1,"w":2,"h":1,"fill":"#6b21a8"},{"x":6,"y":1,"w":1,"h":1,"fill":"#a855f7"},{"x":17,"y":1,"w":9,"h":1,"fill":"#2e1065"},{"x":2,"y":2,"w":1,"h":1,"fill":"#a855f7"},{"x":3,"y":2,"w":1,"h":1,"fill":"#6b21a8"},{"x":4,"y":2,"w":2,"h":1,"fill":"#12081c"},{"x":6,"y":2,"w":1,"h":1,"fill":"#6b21a8"},{"x":7,"y":2,"w":1,"h":1,"fill":"#a855f7"},{"x":15,"y":2,"w":4,"h":1,"fill":"#2e1065"},{"x":19,"y":2,"w":4,"h":1,"fill":"#6b21a8"},{"x":23,"y":2,"w":5,"h":1,"fill":"#2e1065"},{"x":1,"y":3,"w":1,"h":1,"fill":"#a855f7"},{"x":2,"y":3,"w":1,"h":1,"fill":"#6b21a8"},{"x":3,"y":3,"w":1,"h":1,"fill":"#12081c"},{"x":4,"y":3,"w":2,"h":1,"fill":"#3b0764"},{"x":6,"y":3,"w":1,"h":1,"fill":"#12081c"},{"x":7,"y":3,"w":1,"h":1,"fill":"#6b21a8"},{"x":8,"y":3,"w":1,"h":1,"fill":"#a855f7"},{"x":14,"y":3,"w":3,"h":1,"fill":"#2e1065"},{"x":17,"y":3,"w":2,"h":1,"fill":"#6b21a8"},{"x":19,"y":3,"w":3,"h":1,"fill":"#3b0764"},{"x":22,"y":3,"w":2,"h":1,"fill":"#6b21a8"},{"x":24,"y":3,"w":5,"h":1,"fill":"#2e1065"},{"x":0,"y":4,"w":1,"h":1,"fill":"#a855f7"},{"x":1,"y":4,"w":1,"h":1,"fill":"#6b21a8"},{"x":2,"y":4,"w":1,"h":1,"fill":"#12081c"},{"x":3,"y":4,"w":1,"h":1,"fill":"#3b0764"},{"x":4,"y":4,"w":1,"h":1,"fill":"#f0abfc"},{"x":5,"y":4,"w":1,"h":1,"fill":"#d9f99d"},{"x":6,"y":4,"w":1,"h":1,"fill":"#3b0764"},{"x":7,"y":4,"w":1,"h":1,"fill":"#6b21a8"},{"x":8,"y":4,"w":1,"h":1,"fill":"#a855f7"},{"x":13,"y":4,"w":2,"h":1,"fill":"#2e1065"},{"x":15,"y":4,"w":2,"h":1,"fill":"#6b21a8"},{"x":17,"y":4,"w":2,"h":1,"fill":"#3b0764"},{"x":19,"y":4,"w":2,"h":1,"fill":"#a855f7"},{"x":21,"y":4,"w":2,"h":1,"fill":"#3b0764"},{"x":23,"y":4,"w":2,"h":1,"fill":"#6b21a8"},{"x":25,"y":4,"w":4,"h":1,"fill":"#2e1065"},{"x":0,"y":5,"w":1,"h":1,"fill":"#6b21a8"},{"x":1,"y":5,"w":1,"h":1,"fill":"#12081c"},{"x":2,"y":5,"w":2,"h":1,"fill":"#3b0764"},{"x":4,"y":5,"w":2,"h":1,"fill":"#f0abfc"},{"x":6,"y":5,"w":1,"h":1,"fill":"#3b0764"},{"x":7,"y":5,"w":1,"h":1,"fill":"#6b21a8"},{"x":12,"y":5,"w":1,"h":1,"fill":"#2e1065"},{"x":13,"y":5,"w":2,"h":1,"fill":"#6b21a8"},{"x":15,"y":5,"w":1,"h":1,"fill":"#3b0764"},{"x":16,"y":5,"w":6,"h":1,"fill":"#a855f7"},{"x":22,"y":5,"w":2,"h":1,"fill":"#3b0764"},{"x":24,"y":5,"w":1,"h":1,"fill":"#6b21a8"},{"x":25,"y":5,"w":3,"h":1,"fill":"#2e1065"},{"x":1,"y":6,"w":1,"h":1,"fill":"#6b21a8"},{"x":2,"y":6,"w":4,"h":1,"fill":"#3b0764"},{"x":6,"y":6,"w":1,"h":1,"fill":"#6b21a8"},{"x":7,"y":6,"w":1,"h":1,"fill":"#a855f7"},{"x":11,"y":6,"w":1,"h":1,"fill":"#2e1065"},{"x":12,"y":6,"w":2,"h":1,"fill":"#6b21a8"},{"x":14,"y":6,"w":1,"h":1,"fill":"#3b0764"},{"x":15,"y":6,"w":1,"h":1,"fill":"#a855f7"},{"x":16,"y":6,"w":5,"h":1,"fill":"#3b0764"},{"x":21,"y":6,"w":1,"h":1,"fill":"#a855f7"},{"x":22,"y":6,"w":2,"h":1,"fill":"#3b0764"},{"x":24,"y":6,"w":1,"h":1,"fill":"#6b21a8"},{"x":25,"y":6,"w":1,"h":1,"fill":"#2e1065"},{"x":2,"y":7,"w":1,"h":1,"fill":"#6b21a8"},{"x":3,"y":7,"w":2,"h":1,"fill":"#12081c"},{"x":5,"y":7,"w":1,"h":1,"fill":"#6b21a8"},{"x":6,"y":7,"w":1,"h":1,"fill":"#a855f7"},{"x":11,"y":7,"w":2,"h":1,"fill":"#6b21a8"},{"x":13,"y":7,"w":1,"h":1,"fill":"#3b0764"},{"x":14,"y":7,"w":1,"h":1,"fill":"#a855f7"},{"x":15,"y":7,"w":2,"h":1,"fill":"#3b0764"},{"x":17,"y":7,"w":2,"h":1,"fill":"#12081c"},{"x":19,"y":7,"w":2,"h":1,"fill":"#3b0764"},{"x":21,"y":7,"w":1,"h":1,"fill":"#a855f7"},{"x":22,"y":7,"w":2,"h":1,"fill":"#3b0764"},{"x":24,"y":7,"w":1,"h":1,"fill":"#6b21a8"},{"x":3,"y":8,"w":2,"h":1,"fill":"#6b21a8"},{"x":10,"y":8,"w":2,"h":1,"fill":"#6b21a8"},{"x":12,"y":8,"w":1,"h":1,"fill":"#3b0764"},{"x":13,"y":8,"w":1,"h":1,"fill":"#a855f7"},{"x":14,"y":8,"w":2,"h":1,"fill":"#3b0764"},{"x":16,"y":8,"w":4,"h":1,"fill":"#12081c"},{"x":20,"y":8,"w":2,"h":1,"fill":"#3b0764"},{"x":22,"y":8,"w":1,"h":1,"fill":"#a855f7"},{"x":23,"y":8,"w":2,"h":1,"fill":"#3b0764"},{"x":25,"y":8,"w":1,"h":1,"fill":"#6b21a8"},{"x":29,"y":8,"w":3,"h":1,"fill":"#1e1b4b"},{"x":11,"y":9,"w":1,"h":1,"fill":"#6b21a8"},{"x":12,"y":9,"w":1,"h":1,"fill":"#3b0764"},{"x":13,"y":9,"w":1,"h":1,"fill":"#a855f7"},{"x":14,"y":9,"w":2,"h":1,"fill":"#3b0764"},{"x":16,"y":9,"w":4,"h":1,"fill":"#12081c"},{"x":20,"y":9,"w":2,"h":1,"fill":"#3b0764"},{"x":22,"y":9,"w":1,"h":1,"fill":"#a855f7"},{"x":23,"y":9,"w":1,"h":1,"fill":"#3b0764"},{"x":24,"y":9,"w":1,"h":1,"fill":"#6b21a8"},{"x":27,"y":9,"w":2,"h":1,"fill":"#1e1b4b"},{"x":29,"y":9,"w":3,"h":1,"fill":"#3b0764"},{"x":12,"y":10,"w":1,"h":1,"fill":"#6b21a8"},{"x":13,"y":10,"w":2,"h":1,"fill":"#3b0764"},{"x":15,"y":10,"w":1,"h":1,"fill":"#a855f7"},{"x":16,"y":10,"w":4,"h":1,"fill":"#3b0764"},{"x":20,"y":10,"w":1,"h":1,"fill":"#a855f7"},{"x":21,"y":10,"w":2,"h":1,"fill":"#3b0764"},{"x":23,"y":10,"w":1,"h":1,"fill":"#6b21a8"},{"x":25,"y":10,"w":2,"h":1,"fill":"#1e1b4b"},{"x":27,"y":10,"w":3,"h":1,"fill":"#3b0764"},{"x":30,"y":10,"w":1,"h":1,"fill":"#6b21a8"},{"x":13,"y":11,"w":2,"h":1,"fill":"#6b21a8"},{"x":15,"y":11,"w":2,"h":1,"fill":"#3b0764"},{"x":17,"y":11,"w":2,"h":1,"fill":"#a855f7"},{"x":19,"y":11,"w":2,"h":1,"fill":"#3b0764"},{"x":21,"y":11,"w":2,"h":1,"fill":"#6b21a8"},{"x":24,"y":11,"w":1,"h":1,"fill":"#1e1b4b"},{"x":25,"y":11,"w":3,"h":1,"fill":"#3b0764"},{"x":28,"y":11,"w":1,"h":1,"fill":"#6b21a8"},{"x":14,"y":12,"w":3,"h":1,"fill":"#2e1065"},{"x":17,"y":12,"w":3,"h":1,"fill":"#6b21a8"},{"x":20,"y":12,"w":3,"h":1,"fill":"#2e1065"},{"x":24,"y":12,"w":1,"h":1,"fill":"#1e1b4b"},{"x":25,"y":12,"w":1,"h":1,"fill":"#3b0764"},{"x":26,"y":12,"w":1,"h":1,"fill":"#6b21a8"},{"x":13,"y":13,"w":3,"h":1,"fill":"#2e1065"},{"x":21,"y":13,"w":3,"h":1,"fill":"#2e1065"},{"x":25,"y":13,"w":1,"h":1,"fill":"#1e1b4b"},{"x":12,"y":14,"w":2,"h":1,"fill":"#2e1065"},{"x":23,"y":14,"w":2,"h":1,"fill":"#2e1065"}],"rows":["....gg................w.w.............","...ghhg..........wwwwwwwww............","..ghkkhg.......wwwwhhhhwwwww..........",".ghkppkhg.....wwwhhppphhwwwww.........","ghkpmephg....wwhhppggpphhwwww.........","hkppmmph....whhpggggggpphwww..........",".hpppphg...whhpgpppppgpphw............","..hkkhg....hhpgppkkppgpph.............","...hh.....hhpgppkkkkppgpph...ttt......","...........hpgppkkkkppgph..ttppp......","............hppgppppgpph.ttppph.......",".............hhppggpphh.tppph.........","..............wwwhhhwww.tph...........",".............www.....www.t............","............ww.........ww............."],"palette":{"k":"#12081c","p":"#3b0764","h":"#6b21a8","g":"#a855f7","e":"#d9f99d","m":"#f0abfc","w":"#2e1065","t":"#1e1b4b"}},"pipeline":{"width":44,"height":6,"rects":[{"x":2,"y":0,"w":40,"h":1,"fill":"#3f3354"},{"x":1,"y":1,"w":1,"h":1,"fill":"#3f3354"},{"x":2,"y":1,"w":40,"h":1,"fill":"#1b1526"},{"x":42,"y":1,"w":1,"h":1,"fill":"#3f3354"},{"x":0,"y":2,"w":2,"h":1,"fill":"#3f3354"},{"x":2,"y":2,"w":3,"h":1,"fill":"#1b1526"},{"x":5,"y":2,"w":3,"h":1,"fill":"#22d3ee"},{"x":8,"y":2,"w":1,"h":1,"fill":"#0e7490"},{"x":9,"y":2,"w":3,"h":1,"fill":"#1b1526"},{"x":12,"y":2,"w":3,"h":1,"fill":"#22d3ee"},{"x":15,"y":2,"w":1,"h":1,"fill":"#0e7490"},{"x":16,"y":2,"w":3,"h":1,"fill":"#1b1526"},{"x":19,"y":2,"w":3,"h":1,"fill":"#22d3ee"},{"x":22,"y":2,"w":1,"h":1,"fill":"#0e7490"},{"x":23,"y":2,"w":3,"h":1,"fill":"#1b1526"},{"x":26,"y":2,"w":3,"h":1,"fill":"#22d3ee"},{"x":29,"y":2,"w":1,"h":1,"fill":"#0e7490"},{"x":30,"y":2,"w":3,"h":1,"fill":"#1b1526"},{"x":33,"y":2,"w":3,"h":1,"fill":"#22d3ee"},{"x":36,"y":2,"w":1,"h":1,"fill":"#0e7490"},{"x":37,"y":2,"w":5,"h":1,"fill":"#1b1526"},{"x":42,"y":2,"w":2,"h":1,"fill":"#3f3354"},{"x":0,"y":3,"w":2,"h":1,"fill":"#3f3354"},{"x":2,"y":3,"w":3,"h":1,"fill":"#1b1526"},{"x":5,"y":3,"w":3,"h":1,"fill":"#a5f3fc"},{"x":8,"y":3,"w":1,"h":1,"fill":"#0e7490"},{"x":9,"y":3,"w":3,"h":1,"fill":"#1b1526"},{"x":12,"y":3,"w":2,"h":1,"fill":"#a5f3fc"},{"x":14,"y":3,"w":1,"h":1,"fill":"#0e7490"},{"x":15,"y":3,"w":1,"h":1,"fill":"#a5f3fc"},{"x":16,"y":3,"w":3,"h":1,"fill":"#1b1526"},{"x":19,"y":3,"w":2,"h":1,"fill":"#a5f3fc"},{"x":21,"y":3,"w":1,"h":1,"fill":"#0e7490"},{"x":22,"y":3,"w":1,"h":1,"fill":"#a5f3fc"},{"x":23,"y":3,"w":3,"h":1,"fill":"#1b1526"},{"x":26,"y":3,"w":2,"h":1,"fill":"#a5f3fc"},{"x":28,"y":3,"w":1,"h":1,"fill":"#0e7490"},{"x":29,"y":3,"w":1,"h":1,"fill":"#a5f3fc"},{"x":30,"y":3,"w":3,"h":1,"fill":"#1b1526"},{"x":33,"y":3,"w":3,"h":1,"fill":"#a5f3fc"},{"x":36,"y":3,"w":1,"h":1,"fill":"#0e7490"},{"x":37,"y":3,"w":5,"h":1,"fill":"#1b1526"},{"x":42,"y":3,"w":2,"h":1,"fill":"#3f3354"},{"x":1,"y":4,"w":1,"h":1,"fill":"#3f3354"},{"x":2,"y":4,"w":40,"h":1,"fill":"#1b1526"},{"x":42,"y":4,"w":1,"h":1,"fill":"#3f3354"},{"x":2,"y":5,"w":40,"h":1,"fill":"#3f3354"}],"rows":["..hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh..",".hooooooooooooooooooooooooooooooooooooooooh.","hhooocccdooocccdooocccdooocccdooocccdooooohh","hhooogggdoooggdgoooggdgoooggdgooogggdooooohh",".hooooooooooooooooooooooooooooooooooooooooh.","..hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh.."],"palette":{"o":"#1b1526","h":"#3f3354","c":"#22d3ee","g":"#a5f3fc","d":"#0e7490"}}},"config":{"cell":12,"gap":3,"introSeconds":8,"gameSeconds":22,"fps":12,"ballSpeed":132,"paddleSpeed":320,"paddleWidth":96,"header":38,"playHeight":176,"pad":18}}</script>
+  <script>
+const CONFIG = {
+  cell: 12,
+  gap: 3,
+  introSeconds: 8,
+  gameSeconds: 22,
+  fps: 12,
+  ballSpeed: 132,
+  paddleSpeed: 320,
+  paddleWidth: 96,
+  header: 38,
+  playHeight: 176,
+  pad: 18,
+};
+
+function aimVector(bricks, paddleX, layout, config) {
+  const originX = paddleX + layout.paddleW / 2;
+  const originY = layout.paddleY - 16;
+  if (!bricks.length) {
+    return { vx: config.ballSpeed * 0.45, vy: -config.ballSpeed * 0.89 };
+  }
+  const hottest = [...bricks].sort((a, b) => b.level - a.level || b.count - a.count)[0];
+  const dx = hottest.x + hottest.w / 2 - originX;
+  const dy = hottest.y + hottest.h / 2 - originY;
+  const len = Math.hypot(dx, dy) || 1;
+  return {
+    vx: (dx / len) * config.ballSpeed,
+    vy: (dy / len) * config.ballSpeed,
+  };
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function layoutFrom(calendar, config = CONFIG) {
+  const cols = calendar.weeks.length;
+  const rows = 7;
+  const gridW = cols * (config.cell + config.gap) - config.gap;
+  const gridH = rows * (config.cell + config.gap) - config.gap;
+  const width = config.pad * 2 + gridW;
+  const gridX = config.pad;
+  const gridY = config.header + 8;
+  const playY = gridY + gridH + 10;
+  const height = playY + config.playHeight + config.pad;
+  const paddleY = height - config.pad - 18;
+  return {
+    cols,
+    rows,
+    width,
+    height,
+    gridX,
+    gridY,
+    gridW,
+    gridH,
+    playY,
+    paddleY,
+    cell: config.cell,
+    gap: config.gap,
+    pad: config.pad,
+    header: config.header,
+    paddleW: config.paddleWidth,
+    paddleH: 12,
+    ballR: 4.6,
+  };
+}
+
+function bricksFrom(calendar, layout) {
+  const bricks = [];
+  calendar.weeks.forEach((week, col) => {
+    week.days.forEach((day, row) => {
+      bricks.push({
+        id: `${col}-${row}`,
+        col,
+        row,
+        level: day.level,
+        count: day.count,
+        date: day.date,
+        x: layout.gridX + col * (layout.cell + layout.gap),
+        y: layout.gridY + row * (layout.cell + layout.gap),
+        w: layout.cell,
+        h: layout.cell,
+        destroyed: false,
+        hitAt: null,
+        appearAt: 4.6 + (6 - row) * 0.13 + col * 0.006,
+      });
+    });
+  });
+  return bricks;
+}
+
+function createState(calendar, config = CONFIG) {
+  const layout = layoutFrom(calendar, config);
+  const bricks = bricksFrom(calendar, layout);
+  const paddleX = (layout.width - layout.paddleW) / 2;
+  const aim = aimVector(bricks, paddleX, layout, config);
+  return {
+    calendar,
+    config,
+    layout,
+    bricks,
+    live: bricks.filter((brick) => brick.level).length,
+    paddleX,
+    ball: {
+      x: paddleX + layout.paddleW / 2,
+      y: layout.paddleY - 16,
+      vx: aim.vx,
+      vy: aim.vy,
+    },
+    serve: true,
+    introLeft: config.introSeconds,
+    elapsed: 0,
+    keys: { left: false, right: false },
+    focused: false,
+    score: 0,
+    loopBricks: true,
+  };
+}
+
+function paddleTarget(state) {
+  const { ball, layout } = state;
+  if (ball.vy <= 0) return ball.x;
+  const time = (layout.paddleY - ball.y) / Math.max(ball.vy, 40);
+  return ball.x + ball.vx * time * 0.92;
+}
+
+function movePaddle(state, dt) {
+  const { layout, config, keys, focused } = state;
+  let delta = 0;
+  if (focused && (keys.left || keys.right)) {
+    delta = (Number(keys.right) - Number(keys.left)) * config.paddleSpeed * dt;
+  } else {
+    const target = paddleTarget(state);
+    const center = state.paddleX + layout.paddleW / 2;
+    delta = clamp(target - center, -config.paddleSpeed * dt, config.paddleSpeed * dt);
+  }
+  state.paddleX = clamp(state.paddleX + delta, layout.pad, layout.width - layout.pad - layout.paddleW);
+}
+
+function bouncePaddle(state) {
+  const { ball, layout, config } = state;
+  const py = layout.paddleY;
+  if (ball.vy < 0) return;
+  if (ball.y + layout.ballR < py) return;
+  if (ball.y - layout.ballR > py + layout.paddleH) return;
+  if (ball.x < state.paddleX - 2 || ball.x > state.paddleX + layout.paddleW + 2) return;
+  const hit = clamp((ball.x - (state.paddleX + layout.paddleW / 2)) / (layout.paddleW / 2), -1, 1);
+  const speed = Math.max(config.ballSpeed, Math.hypot(ball.vx, ball.vy) * 1.01);
+  const spread = 0.9;
+  ball.vx = speed * Math.sin(hit * spread);
+  ball.vy = -Math.max(speed * 0.4, Math.abs(speed * Math.cos(hit * spread)));
+  ball.y = py - layout.ballR - 0.2;
+}
+
+function keepMoving(ball, speed) {
+  const minVy = speed * 0.32;
+  if (Math.abs(ball.vy) >= minVy) return;
+  ball.vy = (ball.vy < 0 ? -1 : 1) * minVy;
+  const vxSign = ball.vx < 0 ? -1 : 1;
+  ball.vx = vxSign * Math.sqrt(Math.max(speed * speed - ball.vy * ball.vy, 1));
+}
+
+function hitBrick(state, brick, axis, time) {
+  brick.destroyed = true;
+  brick.hitAt = time;
+  state.live -= 1;
+  state.score += brick.count || brick.level;
+  if (axis === "x") state.ball.vx *= -1;
+  else state.ball.vy *= -1;
+  keepMoving(state.ball, Math.hypot(state.ball.vx, state.ball.vy));
+}
+
+function collideBricks(state, axis, time) {
+  const { ball, layout } = state;
+  for (const brick of state.bricks) {
+    if (brick.destroyed || !brick.level) continue;
+    const nx = clamp(ball.x, brick.x, brick.x + brick.w);
+    const ny = clamp(ball.y, brick.y, brick.y + brick.h);
+    const dx = ball.x - nx;
+    const dy = ball.y - ny;
+    if (dx * dx + dy * dy > layout.ballR * layout.ballR) continue;
+    hitBrick(state, brick, axis, time);
+    return;
+  }
+}
+
+function resetBall(state) {
+  const { layout, config } = state;
+  const remaining = state.bricks.filter((brick) => !brick.destroyed && brick.level);
+  const aim = aimVector(remaining, state.paddleX, layout, config);
+  state.ball.x = state.paddleX + layout.paddleW / 2;
+  state.ball.y = layout.paddleY - 16;
+  state.ball.vx = aim.vx;
+  state.ball.vy = aim.vy;
+}
+
+function step(state, dt) {
+  const speed = Math.hypot(state.ball.vx, state.ball.vy);
+  const slices = Math.max(1, Math.ceil((speed * dt) / 3));
+  const slice = dt / slices;
+  for (let i = 0; i < slices; i += 1) advance(state, slice);
+}
+
+function advance(state, dt) {
+  state.elapsed += dt;
+  if (state.elapsed < state.config.introSeconds) {
+    state.paddleX += (state.layout.width / 2 - state.layout.paddleW / 2 - state.paddleX) * 0.08;
+    state.ball.x = state.paddleX + state.layout.paddleW / 2;
+    state.ball.y = state.layout.paddleY - 16;
+    return;
+  }
+
+  movePaddle(state, dt);
+  const { ball, layout } = state;
+  ball.x += ball.vx * dt;
+  if (ball.x < layout.pad + layout.ballR) {
+    ball.x = layout.pad + layout.ballR;
+    ball.vx *= -1;
+  } else if (ball.x > layout.width - layout.pad - layout.ballR) {
+    ball.x = layout.width - layout.pad - layout.ballR;
+    ball.vx *= -1;
+  }
+  collideBricks(state, "x", state.elapsed);
+
+  ball.y += ball.vy * dt;
+  if (ball.y < layout.header + layout.ballR) {
+    ball.y = layout.header + layout.ballR;
+    ball.vy *= -1;
+  }
+  collideBricks(state, "y", state.elapsed);
+  bouncePaddle(state);
+
+  if (ball.y > layout.height + 20) resetBall(state);
+  if (state.loopBricks && state.live <= 0) {
+    for (const brick of state.bricks) {
+      brick.destroyed = false;
+      brick.hitAt = null;
+    }
+    state.live = state.bricks.filter((brick) => brick.level).length;
+  }
+}
+
+function simulate(calendar, config = CONFIG) {
+  const state = createState(calendar, config);
+  state.loopBricks = false;
+  const dt = 1 / config.fps;
+  const total = config.introSeconds + config.gameSeconds;
+  const frames = [];
+  while (state.elapsed < total - dt / 2) {
+    step(state, dt);
+    frames.push({
+      t: state.elapsed,
+      paddleX: state.paddleX,
+      ballX: state.ball.x,
+      ballY: state.ball.y,
+    });
+  }
+  return {
+    calendar,
+    config,
+    layout: state.layout,
+    bricks: state.bricks.map((brick) => ({ ...brick })),
+    frames,
+    total,
+    dt,
+  };
+}
+
+
+const DATA = JSON.parse(document.getElementById("data").textContent);
+const stage = document.getElementById("stage");
+const canvas = document.getElementById("game");
+const hint = document.getElementById("hint");
+const ctx = canvas.getContext("2d");
+const state = createState(DATA.calendar, DATA.config);
+const particles = Array.from({ length: 48 }, (_, i) => ({
+  x: 20 + ((i * 97) % Math.max(40, state.layout.width - 40)),
+  y: (i * 53) % state.layout.height,
+  r: 1.4 + (i % 5) * 0.4,
+  speed: 18 + (i % 7) * 8,
+  color: i % 3 === 0 ? DATA.theme.breathHot : i % 3 === 1 ? DATA.theme.breath : DATA.theme.crystal,
+}));
+
+function resize() {
+  const { width, height } = state.layout;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  canvas.width = Math.floor(width * dpr);
+  canvas.height = Math.floor(height * dpr);
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+
+function drawSprite(sprite, x, y, scale, alpha) {
+  ctx.globalAlpha = alpha;
+  for (const rect of sprite.rects) {
+    ctx.fillStyle = rect.fill;
+    ctx.fillRect(x + rect.x * scale, y + rect.y * scale, rect.w * scale, rect.h * scale);
+  }
+  ctx.globalAlpha = 1;
+}
+
+function introT() {
+  return Math.min(1, state.elapsed / DATA.config.introSeconds);
+}
+
+function drawBackground(now) {
+  const { layout } = state;
+  const g = ctx.createLinearGradient(0, layout.height, 0, 0);
+  g.addColorStop(0, DATA.theme.voidDeep);
+  g.addColorStop(0.55, DATA.theme.background);
+  g.addColorStop(1, "#1a0b2e");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, layout.width, layout.height);
+  ctx.fillStyle = DATA.theme.star;
+  for (let i = 0; i < 70; i += 1) {
+    const x = ((i * 73) % layout.width);
+    const y = ((i * 41) % layout.height);
+    ctx.globalAlpha = 0.2 + (i % 5) * 0.1;
+    ctx.fillRect(x, y, 1.2, 1.2);
+  }
+  ctx.globalAlpha = 1;
+  const islandY = layout.paddleY - 48;
+  ctx.fillStyle = DATA.theme.island;
+  ctx.beginPath();
+  ctx.ellipse(layout.width * 0.22, islandY + 18, 70, 16, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = DATA.theme.islandTop;
+  ctx.beginPath();
+  ctx.ellipse(layout.width * 0.22, islandY + 12, 62, 10, 0, 0, Math.PI * 2);
+  ctx.fill();
+  const portal = ctx.createRadialGradient(layout.width * 0.22, islandY + 10, 2, layout.width * 0.22, islandY + 10, 22);
+  portal.addColorStop(0, DATA.theme.portalGlow);
+  portal.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = portal;
+  ctx.beginPath();
+  ctx.ellipse(layout.width * 0.22, islandY + 10, 18, 8, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = DATA.theme.obsidian;
+  ctx.fillRect(layout.width - 70, layout.playY + 20, 14, layout.height - layout.playY - 50);
+  ctx.fillStyle = DATA.theme.obsidianHi;
+  ctx.fillRect(layout.width - 74, layout.playY + 12, 22, 10);
+  ctx.fillStyle = DATA.theme.crystal;
+  ctx.beginPath();
+  ctx.moveTo(layout.width - 63, layout.playY + 4);
+  ctx.lineTo(layout.width - 57, layout.playY + 14);
+  ctx.lineTo(layout.width - 69, layout.playY + 14);
+  ctx.closePath();
+  ctx.fill();
+
+  const minerAlpha = state.elapsed < 5.2 ? 1 : Math.max(0, 1 - (state.elapsed - 5.2) / 1.4);
+  const minerWalk = Math.min(1, state.elapsed / 2.4);
+  const minerX = 28 - 70 * (1 - minerWalk);
+  const minerY = islandY - DATA.sprites.miner.height * 2 + 8;
+  if (minerAlpha > 0) drawSprite(DATA.sprites.miner, minerX, minerY, 2, minerAlpha);
+
+  const dragonT = Math.min(1, Math.max(0, (state.elapsed - 1.4) / 3.6));
+  const dragonX = layout.width + 20 + (-140 - (layout.width + 20)) * Math.min(1, (state.elapsed - 1.4) / 3.8);
+  const dragonY = 18 + 60 * Math.sin(Math.min(Math.PI, dragonT * Math.PI));
+  const dragonAlpha = state.elapsed < 1.4 ? 0 : state.elapsed < 6.6 ? 1 : 0;
+  if (dragonAlpha > 0) drawSprite(DATA.sprites.dragon, dragonX, dragonY, 2, dragonAlpha);
+
+  if (state.elapsed > 2.6 && state.elapsed < 8.5) {
+    const p = Math.min(1, (state.elapsed - 2.6) / 1.6);
+    const fade = state.elapsed < 5 ? 1 : Math.max(0.08, 1 - (state.elapsed - 5) / 3);
+    const veil = ctx.createRadialGradient(layout.width * 0.48, layout.height * 0.46, 10, layout.width * 0.48, layout.height * 0.46, layout.width * (0.2 + p * 0.7));
+    veil.addColorStop(0, "rgba(240,171,252," + (0.75 * fade) + ")");
+    veil.addColorStop(0.45, "rgba(217,70,239," + (0.55 * fade) + ")");
+    veil.addColorStop(1, "rgba(107,33,168,0)");
+    ctx.fillStyle = veil;
+    ctx.fillRect(0, 0, layout.width, layout.height);
+  }
+
+  for (const particle of particles) {
+    particle.y -= particle.speed * 0.016;
+    if (particle.y < -10) particle.y = layout.height + 8;
+    ctx.globalAlpha = 0.25 + (state.elapsed > 4.5 ? 0.55 : 0.15);
+    ctx.fillStyle = particle.color;
+    ctx.beginPath();
+    ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  ctx.fillStyle = DATA.theme.hud;
+  ctx.font = "13px ui-monospace, monospace";
+  ctx.textAlign = "left";
+  const title = DATA.calendar.source === "repo"
+    ? "commits em " + DATA.calendar.login
+    : "commits de " + DATA.calendar.login + " no GitHub";
+  ctx.fillText(title, layout.pad, 22);
+  ctx.fillStyle = DATA.theme.hudMuted;
+  ctx.textAlign = "right";
+  ctx.fillText(DATA.calendar.total + " no ultimo ano", layout.width - layout.pad, 22);
+  ctx.textAlign = "left";
+}
+
+function drawGame() {
+  const { layout } = state;
+  for (const brick of state.bricks) {
+    if (brick.destroyed) continue;
+    if (state.elapsed < brick.appearAt) continue;
+    ctx.fillStyle = DATA.theme.levels[brick.level];
+    ctx.fillRect(brick.x, brick.y, brick.w, brick.h);
+    ctx.strokeStyle = DATA.theme.obsidianHi;
+    ctx.strokeRect(brick.x + 0.5, brick.y + 0.5, brick.w - 1, brick.h - 1);
+  }
+  if (state.elapsed >= DATA.config.introSeconds - 0.6) {
+    drawSprite(DATA.sprites.pipeline, state.paddleX, layout.paddleY - 2, 2, 1);
+    ctx.save();
+    ctx.shadowColor = DATA.theme.breath;
+    ctx.shadowBlur = 12;
+    ctx.fillStyle = DATA.theme.breath;
+    ctx.beginPath();
+    ctx.arc(state.ball.x, state.ball.y, layout.ballR + 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = DATA.theme.ball;
+    ctx.beginPath();
+    ctx.arc(state.ball.x, state.ball.y, layout.ballR, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+let last = performance.now();
+function loop(now) {
+  const dt = Math.min(0.034, (now - last) / 1000);
+  last = now;
+  step(state, dt);
+  drawBackground(now);
+  drawGame();
+  requestAnimationFrame(loop);
+}
+
+function syncHint() {
+  hint.textContent = state.focused
+    ? "Foco na pipeline. A / D ou setas movem. Clique fora para o automatico voltar."
+    : "Pipeline no automatico. Clique para focar e use A / D ou setas.";
+}
+
+stage.addEventListener("focus", () => { state.focused = true; syncHint(); });
+stage.addEventListener("blur", () => { state.focused = false; state.keys.left = false; state.keys.right = false; syncHint(); });
+stage.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft" || event.key === "a" || event.key === "A") state.keys.left = true;
+  if (event.key === "ArrowRight" || event.key === "d" || event.key === "D") state.keys.right = true;
+  if (["ArrowLeft", "ArrowRight", "a", "A", "d", "D"].includes(event.key)) event.preventDefault();
+});
+stage.addEventListener("keyup", (event) => {
+  if (event.key === "ArrowLeft" || event.key === "a" || event.key === "A") state.keys.left = false;
+  if (event.key === "ArrowRight" || event.key === "d" || event.key === "D") state.keys.right = false;
+});
+canvas.addEventListener("click", () => stage.focus());
+resize();
+requestAnimationFrame(loop);
+
+  </script>
+</body>
+</html>

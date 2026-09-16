@@ -1,0 +1,54 @@
+name: "Commit Craft"
+description: "Fabrica de extensoes GitHub Actions. Gera o Block Breaker dos commits anuais para colar no README."
+author: "Commit Craft"
+branding:
+  icon: box
+  color: purple
+
+inputs:
+  github_user_name:
+    description: "Usuario GitHub cujo calendario anual de contribuicoes (no GitHub inteiro) vira os tijolos."
+    required: true
+  github_token:
+    description: "Token para ler o calendario. O GITHUB_TOKEN padrao ve contribuicoes publicas."
+    required: false
+    default: ${{ github.token }}
+  extension:
+    description: "Extensao da fabrica. Hoje: block-breaker."
+    required: false
+    default: "block-breaker"
+  out_dir:
+    description: "Pasta de saida relativa ao repositorio que chama a Action."
+    required: false
+    default: "dist"
+  source:
+    description: "user = calendario anual no GitHub inteiro. repo = commits das ultimas 52 semanas de um repositorio."
+    required: false
+    default: "user"
+  repository:
+    description: "owner/name quando source=repo. Vazio usa o repositorio da Action."
+    required: false
+    default: ""
+
+outputs:
+  svg_path:
+    description: "SVG autoplay (intro + pipeline jogando sozinha) para o README."
+    value: ${{ steps.generate.outputs.svg_path }}
+  html_path:
+    description: "HTML jogavel. Clique para focar e use setas ou A/D."
+    value: ${{ steps.generate.outputs.html_path }}
+
+runs:
+  using: composite
+  steps:
+    - id: generate
+      shell: bash
+      env:
+        INPUT_GITHUB_USER_NAME: ${{ inputs.github_user_name }}
+        INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
+        INPUT_EXTENSION: ${{ inputs.extension }}
+        INPUT_OUT_DIR: ${{ inputs.out_dir }}
+        INPUT_SOURCE: ${{ inputs.source }}
+        INPUT_REPOSITORY: ${{ inputs.repository }}
+        COMMIT_CRAFT_ACTION_PATH: ${{ github.action_path }}
+      run: node "$COMMIT_CRAFT_ACTION_PATH/src/cli.js"

@@ -1,0 +1,39 @@
+# Copie este arquivo para .github/workflows/commit-craft.yml
+# no repositorio cujo README deve ganhar o Block Breaker.
+
+name: commit-craft
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Block Breaker
+        uses: Michel1412/commit-craft@v1
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          extension: block-breaker
+          out_dir: dist
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist
+          if git diff --cached --quiet; then
+            echo "Sem mudanca visual"
+            exit 0
+          fi
+          git commit -m "chore: regenera o Block Breaker dos commits anuais"
+          git push
