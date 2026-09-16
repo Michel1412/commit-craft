@@ -1,3 +1,6 @@
+# Workflow desta propria fabrica (regenera dist/).
+# Copie para .github/workflows/generate.yml se o token do git tiver scope `workflow`.
+
 name: generate
 
 on:

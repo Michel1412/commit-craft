@@ -108,6 +108,8 @@ node src/cli.js --user SEU_LOGIN --token SEU_TOKEN --out dist
 
 Sem token, a fabrica gera um calendario sintetico so para voce ver a cena.
 
+O workflow que regenera o `dist/` desta fabrica esta em [`examples/self-generate.yml`](./examples/self-generate.yml). Copie para `.github/workflows/generate.yml` se quiser que o GitHub atualize o SVG sozinho.
+
 ## Por que estes dados
 
 O GitHub GraphQL `contributionCalendar` e o mesmo mapa verde do perfil: **todos os commits/contribuicoes publicas do ultimo ano**, em qualquer repositorio. E o “GitHub como um todo” daquela pessoa.
